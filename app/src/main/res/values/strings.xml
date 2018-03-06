@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">FootballManagement</string>
+    <string name="app_greeting">Welcome To Football Management</string>
+</resources>
