@@ -19,25 +19,25 @@ import retrofit.http.Path;
  */
 
 public interface PlayerService {
-    //GET all players
+    /**GET all players, return a list of players*/
     @GET("/players/getall")
     public void getAllPlayers(@Header("Authorization") String token, Callback<List<Player>> callback);
 
 
-    //GET player record base on ID
+    /**GET a player record base on ID, return a player*/
     @GET("/players/getbyid/{id}")
     public void getPlayerById(@Header("Authorization") String token, @Path("id") String id, Callback<Player> callback);
 
-    //GET players record base on teamId
+    /**GET all players record base on teamId, return a list of players*/
     @GET("/players/getallbyteam/{id}")
     public void getAllPlayersByTeam(@Header("Authorization") String token, @Path("id") String id, Callback<List<Player>> callback);
 
-    //DELETE a player
+    /**DELETE a player, return a list of existing players*/
     @DELETE("/players/delete/{id}")
     public void deletePlayer(@Header("Authorization") String token, @Path("id") String id, Callback<List<Player>> callback);
 
 
-    //POST player record and post content in HTTP request BODY
+    /**POST a player record and post content in HTTP request BODY*/
     @POST("/players/update")
     public void updatePlayer(@Header("Authorization") String token, @Body Player player, Callback<Player> callback);
 }

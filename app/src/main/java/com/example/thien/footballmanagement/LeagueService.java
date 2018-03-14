@@ -23,21 +23,22 @@ import retrofit.http.Path;
 
 public interface LeagueService {
     //i.e. http://localhost/api/leagues/getall
+    /**GET all leagues, return a list of leagues */
     @GET("/leagues/getall")
     public void getAllLeagues(@Header("Authorization") String token, Callback<List<League>> callback);
 
 
-    //Get league record base on ID
+    /**Get league record base on ID, return a league*/
     @GET("/leagues/getbyid/{id}")
     public void getLeagueById(@Header("Authorization") String token, @Path("id") String id,Callback<League> callback);
 
 
-    //Delete league base on ID
+    /**Delete a league base on ID*/
     @DELETE("/leagues/delete/{id}")
     public void deleteLeague(@Header("Authorization") String token, @Path("id") String Id, Callback<List<League>> callback);
 
 
-    //POST league record and post content in HTTP request BODY
+    /**POST a league record and post content in HTTP request BODY*/
     @POST("/leagues/update")
     public void updateLeague(@Header("Authorization") String token, @Body League league,Callback<League> callback);
 

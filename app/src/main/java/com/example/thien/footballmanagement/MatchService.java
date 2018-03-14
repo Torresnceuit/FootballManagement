@@ -19,29 +19,29 @@ import retrofit.http.Path;
  */
 
 public interface MatchService {
-    //GET all matches
+    /**GET all matches, return a list of matches */
     @GET("/matches/getall")
     public void getAllMatches(@Header("Authorization") String token, Callback<List<Match>> callback);
 
 
-    //GET match record base on ID
+    /**GET match record base on ID*/
     @GET("/matches/getbyid/{id}")
     public void getMatchById(@Header("Authorization") String token, @Path("id") String id, Callback<Match> callback);
 
-    //GET matches record base on teamId
+    /**GET all matches record base on teamId*/
     @GET("/matches/getallbyround/{id}")
     public void getAllMatchesByRound(@Header("Authorization") String token, @Path("id") String id, Callback<List<Match>> callback);
 
-    //DELETE a match
+    /**DELETE a match*/
     @DELETE("/matches/delete/{id}")
     public void deleteMatch(@Header("Authorization") String token, @Path("id") String id, Callback<List<Match>> callback);
 
 
-    //POST match record and post content in HTTP request BODY
+    /**POST a match record and post content in HTTP request BODY*/
     @POST("/matches/update")
     public void updateMatch(@Header("Authorization") String token, @Body Match match, Callback<Match> callback);
 
-    //POST update all matches
+    /**POST update all matches*/
     @POST("/matches/updateall")
     public void proceedMatches(@Header("Authorization") String token, @Body List<Match> matches, Callback<Object> callback);
 }

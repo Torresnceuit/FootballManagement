@@ -23,32 +23,33 @@ import retrofit.http.Path;
 
 public interface TournamentService {
     //i.e. http://localhost/api/tournaments/getall
+    /**GET all tournaments, return a list of tournaments */
     @GET("/tournaments/getall")
     public void getAllTours(@Header("Authorization") String token, Callback<List<Tournament>> callback);
 
 
-    //GET tour record base on ID
+    /** GET a tournament record base on ID, return a touranment*/
     @GET("/tournaments/getbyid/{id}")
     public void getTourById(@Header("Authorization") String token, @Path("id") String id, Callback<Tournament> callback);
 
-    //GET tour record base on leagueId
+    /**GET all tournaments record base on leagueId, return a list of tournaments*/
     @GET("/tournaments/getallbyleague/{id}")
     public void getAllToursByLeague(@Header("Authorization") String token, @Path("id") String id, Callback<List<Tournament>> callback);
 
-    //DELETE tour base on ID
+    /**DELETE tour base on ID*/
     @DELETE("/tournaments/delete/{id}")
     public void deleteTour(@Header("Authorization") String token, @Path("id") String id, Callback<List<Tournament>> callback);
 
 
-    //POST tour record and post content in HTTP request BODY
+    /**POST tournament record and post content in HTTP request BODY*/
     @POST("/tournaments/update")
     public void updateTour(@Header("Authorization") String token,@Body Tournament tour,Callback<Tournament> callback);
 
-    ///POST Generate fixture for tournament
+    /**POST Generate fixture for tournament*/
     @POST("/generator/drawfixture/{id}")
     public void generateFixture(@Header("Authorization") String token,@Path("id") String id,Callback<Object> callback);
 
-    ///POST Generate rank for tournament
+    /**POST Generate rank for tournament*/
     @POST("/generator/generateRank/{id}")
     public void generateRank(@Header("Authorization") String token,@Path("id") String id,Callback<Object> callback);
 }
