@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:gravity="center">
+
+    <LinearLayout
+        android:id="@+id/teamArea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+
+        >
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+
+            android:id="@+id/detailTeamLogo"
+
+            />
+        <EditText
+            android:id="@+id/detailTeamName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+
+            android:textSize="18dp"
+            />
+
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/playerArea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/teamArea"
+        android:gravity="center"
+
+        >
+        <TextView
+            android:id="@+id/titile"
+            android:textColor="@color/colorPrimary"
+            android:textAlignment="center"
+            android:textSize="25dp"
+            android:text="Player List"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnWidth="60dp"
+            android:numColumns="auto_fit"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp"
+            android:stretchMode="columnWidth"
+            android:layout_weight="1"
+            android:gravity="center"
+
+            android:id="@+id/gridViewPlayer"
+            android:listSelector="@drawable/listview_colours"
+            />
+
+
+
+
+
+
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:paddingBottom="2dp"
+        android:paddingRight="2dp"
+        android:paddingLeft="2dp"
+        android:paddingTop="2dp"
+        android:textColor="#FFFF"
+        android:background="@drawable/rounded_btn"
+        android:layout_alignParentBottom="true"
+
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Player"
+        android:paddingBottom="2dp"
+        android:paddingRight="2dp"
+        android:paddingLeft="2dp"
+        android:paddingTop="2dp"
+        android:textColor="#FFFF"
+        android:id="@+id/btnAddPlayer"
+        android:background="@drawable/rounded_btn"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/btn_save" />
+
+
+
+
+</RelativeLayout>

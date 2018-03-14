@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:shrinkColumns="*"
+    android:gravity="center">
+    <TableRow
+        android:layout_width="match_parent">
+
+        <TextView
+            android:id="@+id/match_Id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:visibility="gone"
+            />
+
+        <TextView
+            android:id="@+id/homeName"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:scrollHorizontally="false"
+            android:ellipsize="none"
+        />
+        <TextView
+            android:layout_height="50dp"
+            android:layout_width="1dp"/>
+        <TextView
+            android:id="@+id/homeScore"
+            android:layout_width="20dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:layout_height="50dp"
+            android:layout_width="1dp"/>
+        <TextView
+            android:id="@+id/awayScore"
+            android:layout_width="20dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:layout_height="50dp"
+            android:layout_width="1dp"/>
+        <TextView
+            android:id="@+id/awayName"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:scrollHorizontally="false"
+            android:ellipsize="none"
+            />
+
+    </TableRow>
+
+</TableLayout>

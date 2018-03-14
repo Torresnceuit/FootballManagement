@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="com.example.thien.footballmanagement.PlayerDetail">
+    <RelativeLayout
+        android:id="@+id/playerAvatar_Area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/detailPlayerAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/playerName_Area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            android:text="Name"
+            android:id="@+id/name_lable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"/>
+        <EditText
+            android:id="@+id/detailPlayerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/name_lable"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/playerAge_Area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:text="Age"
+            android:id="@+id/age_lable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"/>
+        <EditText
+            android:id="@+id/detailPlayerAge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/age_lable"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+    android:id="@+id/playerNation_Area"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+        <TextView
+            android:text="Nationality"
+            android:id="@+id/nation_lable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"/>
+        <EditText
+            android:id="@+id/detailPlayerNation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/nation_lable"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/playerNumber_Area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:text="Number"
+            android:id="@+id/number_lable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"/>
+        <EditText
+            android:id="@+id/detailPlayerNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/number_lable"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/playerPos_Area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            android:text="Position"
+            android:id="@+id/pos_lable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"/>
+        <EditText
+            android:id="@+id/detailPlayerPos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/pos_lable"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:paddingBottom="2dp"
+        android:paddingRight="2dp"
+        android:paddingLeft="2dp"
+        android:paddingTop="2dp"
+        android:textColor="#FFFF"
+        android:background="@drawable/rounded_btn"
+        android:layout_alignParentBottom="true"
+
+        />
+
+
+
+</LinearLayout>

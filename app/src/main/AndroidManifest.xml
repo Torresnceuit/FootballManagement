@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,7 +21,17 @@
             </intent-filter>
         </activity>
         <activity android:name=".HomeActivity" />
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".LeagueDetail" />
+        <activity android:name=".AddLeague" />
+        <activity android:name=".AddTournament" />
+        <activity android:name=".TournamentDetail" />
+        <activity android:name=".AddTeam" />
+        <activity android:name=".TeamDetail" />
+        <activity android:name=".RoundDetail" />
+        <activity android:name=".RankActivity"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".PlayerDetail"></activity>
     </application>
 
 </manifest>

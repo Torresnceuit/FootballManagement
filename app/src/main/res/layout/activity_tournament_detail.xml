@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:gravity="center">
+
+    <LinearLayout
+        android:id="@+id/tourArea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+
+        >
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+
+            android:id="@+id/detailTourLogo"
+
+            />
+        <EditText
+            android:id="@+id/detailTourName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+
+            android:textSize="18dp"
+            />
+
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/teamArea"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:orientation="vertical"
+        android:layout_below="@+id/tourArea"
+        android:gravity="center"
+
+        >
+        <TextView
+            android:id="@+id/titileTeam"
+            android:textColor="@color/colorPrimary"
+            android:textAlignment="center"
+            android:textSize="25dp"
+            android:text="Team List"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnWidth="60dp"
+            android:numColumns="auto_fit"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp"
+            android:stretchMode="columnWidth"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:id="@+id/gridViewTeam"
+            android:listSelector="@drawable/listview_colours"
+            />
+
+        <TextView
+            android:id="@+id/titileFixture"
+            android:textColor="@color/colorPrimary"
+            android:textAlignment="center"
+            android:textSize="25dp"
+            android:text="Fixture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnWidth="60dp"
+            android:numColumns="auto_fit"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp"
+            android:stretchMode="columnWidth"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:id="@+id/gridViewRound"
+            android:listSelector="@drawable/listview_colours"
+            >
+
+        </GridView>
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/roundArea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/teamArea"
+
+        android:gravity="center"
+        >
+
+
+
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:paddingBottom="2dp"
+        android:paddingRight="2dp"
+        android:paddingLeft="2dp"
+        android:paddingTop="2dp"
+        android:textColor="#FFFF"
+        android:background="@drawable/rounded_btn"
+        android:layout_alignBottom="@+id/teamArea"
+
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Team"
+        android:paddingBottom="2dp"
+        android:paddingRight="2dp"
+        android:paddingLeft="2dp"
+        android:paddingTop="2dp"
+        android:textColor="#FFFF"
+        android:id="@+id/btnAddTeam"
+        android:background="@drawable/rounded_btn"
+        android:layout_alignBottom="@+id/teamArea"
+        android:layout_toRightOf="@+id/btn_save" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Table"
+        android:paddingBottom="2dp"
+        android:paddingRight="2dp"
+        android:paddingLeft="2dp"
+        android:paddingTop="2dp"
+        android:textColor="#FFFF"
+        android:id="@+id/btnShow"
+        android:background="@drawable/rounded_btn"
+        android:layout_alignBottom="@+id/teamArea"
+        android:layout_toRightOf="@+id/btnAddTeam" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Generate Fixture"
+        android:paddingBottom="2dp"
+        android:paddingRight="2dp"
+        android:paddingLeft="2dp"
+        android:paddingTop="2dp"
+        android:textColor="#FFFF"
+        android:id="@+id/btnGenerate"
+        android:background="@drawable/rounded_btn"
+        android:layout_alignBottom="@+id/teamArea"
+        android:layout_toRightOf="@+id/btnShow" />
+
+
+
+
+</RelativeLayout>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <LinearLayout
+        android:id="@+id/leagueArea"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+
+        >
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+
+            android:id="@+id/detailLeagueLogo"
+
+            />
+        <EditText
+            android:id="@+id/detailLeagueName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+
+            android:textSize="18dp"
+            />
+
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/tourArea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:layout_toRightOf="@id/leagueArea">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/listView"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:listSelector="@drawable/listview_colours"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Tournament"
+            android:paddingBottom="2dp"
+            android:paddingRight="2dp"
+            android:paddingLeft="2dp"
+            android:paddingTop="2dp"
+            android:textColor="#FFFF"
+            android:id="@+id/btnAddTour"
+            android:background="@drawable/rounded_btn"
+
+            android:layout_alignBottom="@+id/listView" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:paddingBottom="2dp"
+        android:paddingRight="2dp"
+        android:paddingLeft="2dp"
+        android:paddingTop="2dp"
+        android:textColor="#FFFF"
+        android:background="@drawable/rounded_btn"
+        android:layout_alignParentBottom="true"
+
+        />
+
+
+</RelativeLayout>

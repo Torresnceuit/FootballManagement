@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants">
+    <ImageView
+        android:id="@+id/player_logo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+
+        android:background="@drawable/listview_colours"/>
+    <TextView
+        android:id="@+id/player_Id"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/player_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/player_logo"
+        android:layout_centerInParent="true"
+        android:textColor="#CC0033"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:ellipsize="none"
+
+        android:scrollHorizontally="false"/>
+
+    <Button
+        android:id="@+id/btnDelPlayer"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/delete"
+
+        />
+
+</RelativeLayout>
