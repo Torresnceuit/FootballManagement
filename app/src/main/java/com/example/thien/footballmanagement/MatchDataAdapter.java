@@ -21,11 +21,8 @@ import retrofit.client.Response;
 
 public class MatchDataAdapter extends TableDataAdapter {
 
-    private final String TAG = "MatchDataAdapter";
-    public static final String MYPREF = "com.example.thien";
-    public static String bearer = "";
+    private final String TAG = this.getClass().getSimpleName();
     private RestTeamService restTeamService;
-    private Context applicationContext;
     private static final int TEXT_SIZE = 14;
 
     public MatchDataAdapter(Context context, List<Match> matches) {
@@ -38,11 +35,6 @@ public class MatchDataAdapter extends TableDataAdapter {
 
         View renderedView = null;
         restTeamService = new RestTeamService();
-
-        applicationContext = RoundDetail.getContextOfApplication();
-
-        bearer = "Bearer "+applicationContext.getSharedPreferences(MYPREF,Context.MODE_PRIVATE).getString("access_token","");
-        Log.d(TAG,bearer);
 
         switch (columnIndex) {
             case 0:
@@ -66,7 +58,7 @@ public class MatchDataAdapter extends TableDataAdapter {
 
         final TextView tv = new TextView(getContext());
 
-        restTeamService.getService().getTeamById(bearer, match.HomeId, new Callback<Team>() {
+        restTeamService.getService().getTeamById(match.HomeId, new Callback<Team>() {
             @Override
             public void success(Team team, Response response) {
 
@@ -116,7 +108,7 @@ public class MatchDataAdapter extends TableDataAdapter {
 
         final TextView tv = new TextView(getContext());
 
-        restTeamService.getService().getTeamById(bearer, match.AwayId, new Callback<Team>() {
+        restTeamService.getService().getTeamById(match.AwayId, new Callback<Team>() {
             @Override
             public void success(Team team, Response response) {
 

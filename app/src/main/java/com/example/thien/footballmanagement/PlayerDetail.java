@@ -28,24 +28,16 @@ import retrofit.converter.Converter;
 
 public class PlayerDetail extends AppCompatActivity {
 
-    private String TAG = "PlayerDetailActivity";
-    public static final String MYPREF = "com.example.thien";
-    public SharedPreferences sharedPreferences;
-    public static String bearer = "";
+    private final String TAG = this.getClass().getSimpleName();
     public static Context contextOfApplication;
 
     RestPlayerService restPlayerService;
 
     ImageView playerDetailAvatar;
-    EditText playerDetailName;
-    EditText playerDetailAge;
-    EditText playerDetailNumber;
-    EditText playerDetailNationality;
-    EditText playerDetailPos;
-
+    EditText playerDetailName, playerDetailAge, playerDetailNumber, playerDetailNationality, playerDetailPos;
     Button btnSave;
 
-    Player _player;
+    Player mPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +46,7 @@ public class PlayerDetail extends AppCompatActivity {
 
         restPlayerService = new RestPlayerService();
         contextOfApplication = getApplicationContext();
-        _player = new Player();
+        mPlayer = new Player();
         playerDetailAvatar = (ImageView) findViewById(R.id.detailPlayerAvatar);
         playerDetailName = (EditText) findViewById(R.id.detailPlayerName);
         playerDetailAge = (EditText) findViewById(R.id.detailPlayerAge);
@@ -68,11 +60,7 @@ public class PlayerDetail extends AppCompatActivity {
                 save();
             }
         });
-        //btnAdd.setOnClickListener(this);
-        sharedPreferences = getSharedPreferences(MYPREF,MODE_PRIVATE);
-        bearer = "Bearer "+sharedPreferences.getString("access_token","");
-        Log.d(TAG,"OnCreate");
-        Log.d(TAG,bearer);
+
     }
 
     @Override
@@ -83,12 +71,12 @@ public class PlayerDetail extends AppCompatActivity {
     }
 
     private void save() {
-        _player.Name = playerDetailName.getText().toString();
-        _player.Age = Integer.parseInt(playerDetailAge.getText().toString());
-        _player.Nationality = playerDetailNationality.getText().toString();
-        _player.Number = Integer.parseInt(playerDetailNumber.getText().toString());
-        _player.Position = playerDetailPos.getText().toString().split(",");
-        restPlayerService.getService().updatePlayer(bearer, _player, new Callback<Player>() {
+        mPlayer.Name = playerDetailName.getText().toString();
+        mPlayer.Age = Integer.parseInt(playerDetailAge.getText().toString());
+        mPlayer.Nationality = playerDetailNationality.getText().toString();
+        mPlayer.Number = Integer.parseInt(playerDetailNumber.getText().toString());
+        mPlayer.Position = playerDetailPos.getText().toString().split(",");
+        restPlayerService.getService().updatePlayer(mPlayer, new Callback<Player>() {
 
 
             @Override
@@ -104,7 +92,7 @@ public class PlayerDetail extends AppCompatActivity {
         });
     }
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////
+    // TO DO: when refresh screen
     private void refreshScreen() {
 
         //Call to server to grab list of student records. this is a asyn
@@ -112,13 +100,13 @@ public class PlayerDetail extends AppCompatActivity {
         Intent i = getIntent();
         player_Id = i.getStringExtra("player_Id");
         Log.d(TAG,"player_Id= "+player_Id);
-        //////GET LEAGUE INFO
-        restPlayerService.getService().getPlayerById(bearer, player_Id, new Callback<Player>() {
+        // Get league info
+        restPlayerService.getService().getPlayerById(player_Id, new Callback<Player>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void success(Player player, Response response) {
                 Log.d(TAG, "fetch player successfully!");
-                _player = player;
+                mPlayer = player;
                 if(player.Avatar!=null){
                     String playerLogoUrl = player.Avatar.replaceAll("localhost","10.0.2.2");
                     Picasso.with(getApplicationContext())
@@ -146,8 +134,6 @@ public class PlayerDetail extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
-
-
 
     }
 

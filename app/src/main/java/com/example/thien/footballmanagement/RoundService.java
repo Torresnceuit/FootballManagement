@@ -21,23 +21,23 @@ import retrofit.http.Path;
 public interface RoundService {
     /**GET all rounds, return a list of rounds*/
     @GET("/rounds/getall")
-    public void getAllRounds(@Header("Authorization") String token, Callback<List<Round>> callback);
+    public void getAllRounds( Callback<List<Round>> callback);
 
 
     /**GET a round record base on ID, return a round*/
     @GET("/rounds/getbyid/{id}")
-    public void getRoundById(@Header("Authorization") String token, @Path("id") String id, Callback<Round> callback);
+    public void getRoundById(@Path("id") String id, Callback<Round> callback);
 
     /**GET all rounds record base on tournamentId, return a list of rounds*/
     @GET("/rounds/getallbytour/{id}")
-    public void getAllRoundsByTour(@Header("Authorization") String token, @Path("id") String id, Callback<List<Round>> callback);
+    public void getAllRoundsByTour(@Path("id") String id, Callback<List<Round>> callback);
 
     /**DELETE a round, return a list of existing rounds*/
     @DELETE("/rounds/delete/{id}")
-    public void deleteRound(@Header("Authorization") String token, @Path("id") String id, Callback<List<Round>> callback);
+    public void deleteRound(@Path("id") String id, Callback<List<Round>> callback);
 
 
     /**POST round record and post content in HTTP request BODY*/
     @POST("/rounds/update")
-    public void updateRound(@Header("Authorization") String token, @Body Round round, Callback<Round> callback);
+    public void updateRound(@Body Round round, Callback<Round> callback);
 }

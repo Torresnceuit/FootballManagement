@@ -25,24 +25,18 @@ import retrofit.client.Response;
 
 public class TeamDetail extends AppCompatActivity {
 
-    private List<Player> players; // Store all players retrieve from response
-
-    private String TAG = "TeamDetailActivity";
-    public static final String MYPREF = "com.example.thien";
-    public SharedPreferences sharedPreferences;
-    public static String bearer = "";
+    private String TAG = this.getClass().getSimpleName();
     public static Context contextOfApplication;
 
     GridView gridView;
-    Button btnAdd;
-    Button btnSave;
+    Button btnAdd, btnSave;
     RestTeamService restTeamService;
     RestPlayerService restPlayerService;
     TextView player_Id;
 
     ImageView teamDetailLogo;
     EditText teamDetailName;
-    Team _team;
+    Team mTeam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +46,7 @@ public class TeamDetail extends AppCompatActivity {
         restPlayerService = new RestPlayerService();
         restTeamService = new RestTeamService();
         contextOfApplication = getApplicationContext();
-        _team = new Team();
+        mTeam = new Team();
         teamDetailLogo = (ImageView) findViewById(R.id.detailTeamLogo);
         teamDetailName = (EditText) findViewById(R.id.detailTeamName);
         btnAdd= (Button) findViewById(R.id.btnAddPlayer);
@@ -69,11 +63,6 @@ public class TeamDetail extends AppCompatActivity {
                 save();
             }
         });
-        // Get bearer from SharePreferences
-        sharedPreferences = getSharedPreferences(MYPREF,MODE_PRIVATE);
-        bearer = "Bearer "+sharedPreferences.getString("access_token","");
-        Log.d(TAG,"OnCreate");
-        Log.d(TAG,bearer);
     }
 
     @Override
@@ -93,8 +82,8 @@ public class TeamDetail extends AppCompatActivity {
 
     //  Save Team after Edited
     private void save(){
-        _team.Name = teamDetailName.getText().toString();
-        restTeamService.getService().updateTeam(bearer, _team, new Callback<Team>() {
+        mTeam.Name = teamDetailName.getText().toString();
+        restTeamService.getService().updateTeam(mTeam, new Callback<Team>() {
 
 
             @Override
@@ -109,7 +98,7 @@ public class TeamDetail extends AppCompatActivity {
             }
         });
     }
-    /////////////////////////////////////////////////////////////////////////////////////////////////
+    // TO DO: when refresh
     private void refreshScreen() {
 
         //Call to server to grab list of players records. this is a asyn
@@ -118,13 +107,13 @@ public class TeamDetail extends AppCompatActivity {
         team_Id = i.getStringExtra("team_Id");
         Log.d(TAG,"team_Id= "+team_Id);
         // Get team info
-        restTeamService.getService().getTeamById(bearer, team_Id, new Callback<Team>() {
+        restTeamService.getService().getTeamById(team_Id, new Callback<Team>() {
 
 
             @Override
             public void success(Team team, Response response) {
                 Log.d(TAG, "fetch Team successfully!");
-                _team = team;
+                mTeam = team;
                 if(team.Logo!=null){
                     String teamLogoUrl = team.Logo.replaceAll("localhost","10.0.2.2");
 
@@ -148,7 +137,7 @@ public class TeamDetail extends AppCompatActivity {
             }
         });
         /// Get all players by team Id and display in a gridview
-        restPlayerService.getService().getAllPlayersByTeam(bearer, team_Id, new Callback<List<Player>>() {
+        restPlayerService.getService().getAllPlayersByTeam(team_Id, new Callback<List<Player>>() {
             @Override
             public void success(List<Player> players, Response response) {
                 GridView gvPlayer = (GridView) findViewById(R.id.gridViewPlayer);

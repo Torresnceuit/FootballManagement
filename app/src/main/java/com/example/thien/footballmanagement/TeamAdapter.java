@@ -29,11 +29,8 @@ import retrofit.client.Response;
 
 public class TeamAdapter extends ArrayAdapter<Team> {
 
-    private final String TAG = "TeamAdapter";
-    public static final String MYPREF = "com.example.thien";
-    public static String bearer = "";
+    private final String TAG = this.getClass().getSimpleName();
     private RestTeamService restTeamService;
-    private Context applicationContext;
 
     public TeamAdapter(@NonNull Context context, int resource, List<Team> teams) {
         super(context, resource, teams);
@@ -46,13 +43,6 @@ public class TeamAdapter extends ArrayAdapter<Team> {
         View v = convertView;
 
          restTeamService = new RestTeamService();
-
-        applicationContext = TournamentDetail.getContextOfApplication();
-
-        bearer = "Bearer "+applicationContext
-                .getSharedPreferences(MYPREF,Context.MODE_PRIVATE)
-                .getString("access_token",""); // Get bearer for authorize request
-        Log.d(TAG,bearer);
 
         if (v == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -103,7 +93,7 @@ public class TeamAdapter extends ArrayAdapter<Team> {
 
     // Delete a team: para {team}
     private void delete(final Team team){
-        restTeamService.getService().deleteTeam(bearer, team.Id, new Callback<List<Team>>() {
+        restTeamService.getService().deleteTeam(team.Id, new Callback<List<Team>>() {
 
 
             @Override

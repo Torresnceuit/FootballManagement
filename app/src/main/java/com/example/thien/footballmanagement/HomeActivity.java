@@ -23,22 +23,14 @@ import retrofit.client.Response;
 public class HomeActivity extends AppCompatActivity {
 
     //List of League is used to store the leagues received from response
-    private List<League> leagues;
-    private final String TAG = "HomeActivity";
-    /*We always need to get this activity context when we want to load
-    /
-    / sharePreference fron non-activity class to get bearer for request.
-    / contextOfApplication will help us to refer to get content of SharePreferences
-    */
+    private List<League> mLeagues;
+    private final String TAG = this.getClass().getSimpleName();
     public static Context contextOfApplication;
-    public static final String MYPREF = "com.example.thien";
-    private SharedPreferences sharedPreferences;
-    public static String bearer = "";
-
     ListView listView;
     Button btnAdd;
     // The Rest Service call to LeagueService Interface
     RestLeagueService restLeagueService;
+
 
     // league_Id will be passed to new Intent to refer back to the league instance
     TextView league_Id;
@@ -47,29 +39,16 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        /*Initiate all variable here*/
+        //Initiate all variable here
         restLeagueService = new RestLeagueService();
         contextOfApplication = getApplicationContext();
         btnAdd= (Button) findViewById(R.id.btnAdd);
-
-
-        sharedPreferences = getSharedPreferences(MYPREF,MODE_PRIVATE);
-        bearer = "Bearer "+sharedPreferences
-                .getString("access_token","");//Get the access_token stored in sharedPreference after logging in
-        Log.d(TAG,"OnCreate");
-        Log.d(TAG,bearer);
-
-
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openAdd();
             }
         });
-
-
-
-
 
     }
 
@@ -79,18 +58,18 @@ public class HomeActivity extends AppCompatActivity {
         super.onResume();
         refreshScreen();
     }
-    //// OPEN ADD LEAGUE DIALOG
+    //Open Add Screen
     private void openAdd(){
         Intent i = new Intent(getApplicationContext(),AddLeague.class);
         startActivity(i);
     }
 
 
-    //// TO DO when refreshing screen
+    // TO DO when refreshing screen
     public void refreshScreen() {
 
         //Call to server to grab list of student records. this is a asyn
-        restLeagueService.getService().getAllLeagues(bearer,new Callback<List<League>>() {
+        restLeagueService.getService().getAllLeagues(new Callback<List<League>>() {
 
             //Successful response: render listview by LeagueAdapter
             @Override
@@ -122,7 +101,9 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void failure(RetrofitError error) {
                 Log.d(TAG,"GetAllLeagues failed");
-                Toast.makeText(HomeActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                if(error.getMessage().length()>0){
+                    Toast.makeText(HomeActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                }
             }
         });
 

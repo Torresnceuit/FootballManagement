@@ -31,6 +31,9 @@ dependencies {
     //compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
     compile 'com.squareup.retrofit:retrofit:1.6.1'
+    compile 'com.jakewharton.retrofit:retrofit1-okhttp3-client:1.0.2'
+    //compile 'com.squareup.retrofit2:retrofit:2.3.0'
+
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'de.codecrafters.tableview:tableview:2.8.0'
 

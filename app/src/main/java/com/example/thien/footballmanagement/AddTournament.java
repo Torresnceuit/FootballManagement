@@ -16,26 +16,18 @@ import retrofit.client.Response;
 
 public class AddTournament extends AppCompatActivity {
 
-    private String TAG = "AddTournamentActivity";
-    public static final String MYPREF = "com.example.thien";
-    public SharedPreferences sharedPreferences;
-    public static String bearer = "";
-
+    private String TAG = this.getClass().getSimpleName();
     private Button btnSave;
-    private EditText _tourName;
+    private EditText mTourName;
     private RestTourService restTourService;
-    private Tournament tour;
+    private Tournament mTour;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_tournament);
         btnSave = (Button) findViewById(R.id.btn_saveTour);
-        _tourName = (EditText) findViewById(R.id.addtour_name);
+        mTourName = (EditText) findViewById(R.id.addtour_name);
         restTourService = new RestTourService();
-        sharedPreferences = getSharedPreferences(MYPREF,MODE_PRIVATE);
-        bearer = "Bearer "+sharedPreferences.getString("access_token","");
-        tour = new Tournament();
-
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,14 +38,14 @@ public class AddTournament extends AppCompatActivity {
 
     private void save(){
         Intent i = getIntent();
-        tour.Name = _tourName.getText().toString();
-        tour.LeagueId = i.getStringExtra("league_Id");
+        mTour.Name = mTourName.getText().toString();
+        mTour.LeagueId = i.getStringExtra("league_Id");
 
         if(!validate()){
             onSaveFailed();
             return;
         }
-        restTourService.getService().updateTour(bearer, tour, new Callback<Tournament>() {
+        restTourService.getService().updateTour(mTour, new Callback<Tournament>() {
 
             @Override
             public void success(Tournament tournament, Response response) {
@@ -83,12 +75,12 @@ public class AddTournament extends AppCompatActivity {
     public boolean validate() {
         boolean valid = true;
 
-        String tourName = _tourName.getText().toString();
+        String tourName = mTourName.getText().toString();
         if(tourName.isEmpty()){
-            _tourName.setError("Name can not be empty, please fill in club name!");
+            mTourName.setError("Name can not be empty, please fill in club name!");
             valid = false;
         }else {
-            _tourName.setError(null);
+            mTourName.setError(null);
         }
 
         return valid;

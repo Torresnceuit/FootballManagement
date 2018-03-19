@@ -14,9 +14,11 @@ public class MyPreferenceManager {
 
     SharedPreferences.Editor editor;
 
-    private static final String PREF_NAME = "com.example.thien.footballmanagement";
+    private static final String PREF_NAME = "com.example.thien";
 
     public static final String KEY_ACCESS_TOKEN = "access_token";
+    public static final String KEY_USERNAME = "username";
+    public static final String KEY_PASSWORD = "password";
 
     public MyPreferenceManager(Context context) {
 

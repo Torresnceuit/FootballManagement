@@ -42,11 +42,8 @@ import retrofit.client.Response;
 
 public class LeagueAdapter extends ArrayAdapter<League> {
 
-    private final String TAG = "LeagueAdapter";
-    public static final String MYPREF = "com.example.thien";
-    public static String bearer = "";
+    private final String TAG = this.getClass().getSimpleName();
     private RestLeagueService restLeagueService;
-    private Context applicationContext;
 
     // Constructor
     public LeagueAdapter(Context context, int resource, List<League> league) {
@@ -60,13 +57,6 @@ public class LeagueAdapter extends ArrayAdapter<League> {
 
         View v = convertView;
         restLeagueService = new RestLeagueService();
-        applicationContext = HomeActivity.getContextOfApplication();// Get HomeActivity context to use sharePreferences
-
-        bearer = "Bearer "+applicationContext
-                .getSharedPreferences(MYPREF,Context.MODE_PRIVATE)
-                .getString("access_token","");// build bearer string for executing the authorize request
-        Log.d(TAG,bearer);
-
 
         if (v == null) {
             LayoutInflater inflater = (LayoutInflater) getContext()
@@ -74,8 +64,8 @@ public class LeagueAdapter extends ArrayAdapter<League> {
             v = inflater.inflate(R.layout.view_league_entry, parent, false); // Get view from view_league_entry layout
 
         }
-
-        final League league = getItem(position);// Get a single league at position
+        // Get a single league at position
+        final League league = getItem(position);
 
 
         if (league != null) {
@@ -118,7 +108,7 @@ public class LeagueAdapter extends ArrayAdapter<League> {
 
     public void delete(final League league){
         // Call to LeagueService -> deleteLeague, Get a list of League in response
-        restLeagueService.getService().deleteLeague(bearer, league.Id, new Callback<List<League>>() {
+        restLeagueService.getService().deleteLeague(league.Id, new Callback<List<League>>() {
             @Override
             public void success(List<League> leagues, Response response) {
                 Log.d(TAG,"Delete league done successfully!");

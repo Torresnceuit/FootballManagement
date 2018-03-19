@@ -18,16 +18,16 @@ import retrofit.http.Path;
 public interface RankService {
     /**GET all ranks record, return a list of ranks */
     @GET("/ranks/getall")
-    public void getAllRanks(@Header("Authorization") String token, Callback<List<Rank>> callback);
+    public void getAllRanks(Callback<List<Rank>> callback);
 
 
     /**Get a rank record base on ID, return a rank*/
     @GET("/ranks/getbyid/{id}")
-    public void getRankById(@Header("Authorization") String token, @Path("id") String id, Callback<Rank> callback);
+    public void getRankById(@Path("id") String id, Callback<Rank> callback);
 
     /**Get ranks record base on tournament Id, return a list of ranks*/
     @GET("/ranks/getallbytour/{id}")
-    public void getAllRanksByTour(@Header("Authorization") String token, @Path("id") String id, Callback<List<Rank>> callback);
+    public void getAllRanksByTour(@Path("id") String id, Callback<List<Rank>> callback);
 
     
 }

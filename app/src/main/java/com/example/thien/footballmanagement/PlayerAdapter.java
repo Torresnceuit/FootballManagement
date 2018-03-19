@@ -30,11 +30,8 @@ import retrofit.client.Response;
 
 public class PlayerAdapter extends ArrayAdapter<Player> {
 
-    private final String TAG = "PlayerAdapter";
-    public static final String MYPREF = "com.example.thien";
-    public static String bearer = "";
+    private final String TAG = this.getClass().getSimpleName();
     private RestPlayerService restPlayerService;
-    private Context applicationContext;
 
     public PlayerAdapter(@NonNull Context context, int resource, @NonNull List<Player> players) {
         super(context, resource, players);
@@ -46,13 +43,6 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
         View v = convertView;
 
         restPlayerService = new RestPlayerService();
-
-        applicationContext = TeamDetail.getContextOfApplication(); // Get TeamDetail Context to get SharePreferences
-
-        bearer = "Bearer "+applicationContext
-                .getSharedPreferences(MYPREF,Context.MODE_PRIVATE)
-                .getString("access_token",""); // Get bearer
-        Log.d(TAG,bearer);
 
         if (v == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -102,7 +92,7 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
     }
 
     private void delete(final Player player){
-        restPlayerService.getService().deletePlayer(bearer, player.Id, new Callback<List<Player>>() {
+        restPlayerService.getService().deletePlayer(player.Id, new Callback<List<Player>>() {
             @Override
             public void success(List<Player> players, Response response) {
                 Log.d(TAG,"Delete player done successfully!");

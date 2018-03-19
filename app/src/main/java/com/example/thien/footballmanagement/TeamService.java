@@ -23,23 +23,23 @@ import retrofit.http.Path;
 public interface TeamService {
     /**Get all teams, return a list of teams */
     @GET("/teams/getall")
-    public void getAllTeams(@Header("Authorization") String token, Callback<List<Team>> callback);
+    public void getAllTeams(Callback<List<Team>> callback);
 
 
     /**GET a team record base on ID, return a team*/
     @GET("/teams/getbyid/{id}")
-    public void getTeamById(@Header("Authorization") String token, @Path("id") String id, Callback<Team> callback);
+    public void getTeamById(@Path("id") String id, Callback<Team> callback);
 
     /**GET all teams record base on tournamentId, return a list of teams*/
     @GET("/teams/getallbytour/{id}")
-    public void getAllTeamsByTour(@Header("Authorization") String token, @Path("id") String id, Callback<List<Team>> callback);
+    public void getAllTeamsByTour( @Path("id") String id, Callback<List<Team>> callback);
 
     /**DELETE a team base on Id, return the list of existing teams*/
     @DELETE("/teams/delete/{id}")
-    public void deleteTeam(@Header("Authorization") String token, @Path("id") String id, Callback<List<Team>> callback);
+    public void deleteTeam(@Path("id") String id, Callback<List<Team>> callback);
 
 
     /**POST a team record and post content in HTTP request BODY*/
     @POST("/teams/update")
-    public void updateTeam(@Header("Authorization") String token, @Body Team team, Callback<Team> callback);
+    public void updateTeam(@Body Team team, Callback<Team> callback);
 }

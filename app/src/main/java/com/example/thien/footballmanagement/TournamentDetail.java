@@ -25,29 +25,24 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class TournamentDetail extends AppCompatActivity {
-
-    private List<Team> teams; // Store teams from http response
-    private List<Round> rounds; // Store rounds from http response
-    private String TAG = "TournamentDetailActivity";
-    public static final String MYPREF = "com.example.thien";
-    public SharedPreferences sharedPreferences;
-    public static String bearer = "";
-    public static Context contextOfApplication; // Instance of TournamentDetail context
+    // Store teams from http response
+    private List<Team> teams;
+    // Store rounds from http response
+    private List<Round> rounds;
+    private String TAG = this.getClass().getSimpleName();
+    // Instance of TournamentDetail context
+    public static Context contextOfApplication;
 
     GridView gridView;
-    Button btnAdd;
-    Button btnSave;
-    Button btnShow;
-    Button btnGenerate;
+    Button btnAdd, btnSave, btnShow, btnGenerate;
     RestTeamService restTeamService;
     RestTourService restTourService;
     RestRoundService restRoundService;
 
-    TextView team_Id;
-    TextView round_Id;
+    TextView team_Id, round_Id;
     ImageView tourDetailLogo;
     EditText tourDetailName;
-    Tournament _tour;
+    Tournament mTour;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +53,7 @@ public class TournamentDetail extends AppCompatActivity {
         restTeamService = new RestTeamService();
         restRoundService = new RestRoundService();
         contextOfApplication = getApplicationContext();
-        _tour = new Tournament();
+        mTour = new Tournament();
         tourDetailLogo = (ImageView) findViewById(R.id.detailTourLogo);
         tourDetailName = (EditText) findViewById(R.id.detailTourName);
         btnAdd= (Button) findViewById(R.id.btnAddTeam);
@@ -89,11 +84,7 @@ public class TournamentDetail extends AppCompatActivity {
                 generateFixture();
             }
         });
-        //btnAdd.setOnClickListener(this);
-        sharedPreferences = getSharedPreferences(MYPREF,MODE_PRIVATE);
-        bearer = "Bearer "+sharedPreferences.getString("access_token","");
-        Log.d(TAG,"OnCreate");
-        Log.d(TAG,bearer);
+
     }
 
     @Override
@@ -106,25 +97,31 @@ public class TournamentDetail extends AppCompatActivity {
     // Open AddTeam Activity
     private void openAdd(){
         Intent i = new Intent(TournamentDetail.this,AddTeam.class);
-        i.putExtra("tour_Id",_tour.Id); // Pass tour_Id in Intent
+        // Pass tour_Id in Intent
+        i.putExtra("tour_Id",mTour.Id);
         startActivity(i);
     }
 
     // Generate the rank of tournament
     private void showRank(){
         //Collect rank first
-        restTourService.getService().generateRank(bearer, _tour.Id, new Callback<Object>() {
+        restTourService.getService().generateRank( mTour.Id,"", new Callback<Object>() {
             @Override
             public void success(Object o, Response response) {
                 // Display rank
                 Intent i = new Intent(TournamentDetail.this,RankActivity.class);
-                i.putExtra("tour_Id",_tour.Id);
+                i.putExtra("tour_Id",mTour.Id);
                 startActivity(i);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getApplicationContext(),"Generate Rank Failed!",Toast.LENGTH_LONG).show();
+
+                if(error.getMessage().length()>0){
+                    Log.d(TAG,"Generate Rank Failed!"+error.getMessage());
+                    Toast.makeText(getApplicationContext(),"Generate Rank Failed!"+error.getMessage(),Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 
@@ -135,7 +132,7 @@ public class TournamentDetail extends AppCompatActivity {
     private void generateFixture(){
         Intent i = getIntent();
         String tour_Id = i.getStringExtra("tour_Id");
-        restTourService.getService().generateFixture(bearer, tour_Id, new Callback<Object>() {
+        restTourService.getService().generateFixture(tour_Id,"", new Callback<Object>() {
             @Override
             public void success(Object o, Response response) {
                 Log.d(TAG,"Generate Fixture Successfully!");
@@ -151,8 +148,8 @@ public class TournamentDetail extends AppCompatActivity {
 
     // Save tournament after editing
     private void save(){
-        _tour.Name = tourDetailName.getText().toString();
-        restTourService.getService().updateTour(bearer, _tour, new Callback<Tournament>() {
+        mTour.Name = tourDetailName.getText().toString();
+        restTourService.getService().updateTour(mTour, new Callback<Tournament>() {
 
 
             @Override
@@ -167,7 +164,7 @@ public class TournamentDetail extends AppCompatActivity {
             }
         });
     }
-    /////////////////////////////////////////////////////////////////////////////////////////////////
+    // TO DO when refresh
     private void refreshScreen() {
 
         //Call to server to grab list of teams and rounds records. this is a asyn
@@ -176,13 +173,13 @@ public class TournamentDetail extends AppCompatActivity {
         tour_Id = i.getStringExtra("tour_Id");
         Log.d(TAG,"tour_Id= "+tour_Id);
         // Get Tournament Info first
-        restTourService.getService().getTourById(bearer, tour_Id, new Callback<Tournament>() {
+        restTourService.getService().getTourById(tour_Id, new Callback<Tournament>() {
 
 
             @Override
             public void success(Tournament tournament, Response response) {
                 Log.d(TAG, "fetch Tour successfully!");
-                _tour = tournament;
+                mTour = tournament;
                 if(tournament.Logo!=null){
                     String tourLogoUrl = tournament.Logo.replaceAll("localhost","10.0.2.2");
 
@@ -193,10 +190,11 @@ public class TournamentDetail extends AppCompatActivity {
                             .centerCrop()
                             .into(tourDetailLogo);
                 }else {
-                    tourDetailLogo.setImageResource(R.drawable.cup); // Set default tournament logo
+                    // Set default tournament logo
+                    tourDetailLogo.setImageResource(R.drawable.cup);
                 }
-
-                tourDetailName.setText(tournament.Name); // Get Tournament name
+                // Get Tournament name
+                tourDetailName.setText(tournament.Name);
             }
 
             @Override
@@ -206,7 +204,7 @@ public class TournamentDetail extends AppCompatActivity {
             }
         });
         /// Get all teams by tournament Id
-        restTeamService.getService().getAllTeamsByTour(bearer, tour_Id, new Callback<List<Team>>() {
+        restTeamService.getService().getAllTeamsByTour(tour_Id, new Callback<List<Team>>() {
             @Override
             public void success(List<Team> teams, Response response) {
                 GridView gvTeam = (GridView) findViewById(R.id.gridViewTeam);
@@ -237,7 +235,7 @@ public class TournamentDetail extends AppCompatActivity {
             }
         });
         // Get all rounds by tournament Id
-        restRoundService.getService().getAllRoundsByTour(bearer, tour_Id, new Callback<List<Round>>() {
+        restRoundService.getService().getAllRoundsByTour(tour_Id, new Callback<List<Round>>() {
             @Override
             public void success(List<Round> rounds, Response response) {
                 GridView gvRound = (GridView) findViewById(R.id.gridViewRound);

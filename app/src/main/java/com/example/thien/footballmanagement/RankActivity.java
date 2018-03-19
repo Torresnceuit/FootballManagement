@@ -18,11 +18,7 @@ import retrofit.client.Response;
 
 public class RankActivity extends AppCompatActivity {
 
-    private List<Match> matches;
-    private String TAG = "RoundDetailActivity";
-    public static final String MYPREF = "com.example.thien";
-    public SharedPreferences sharedPreferences;
-    public static String bearer = "";
+    private String TAG = this.getClass().getSimpleName();
     public static Context contextOfApplication;
     RestRankService restRankService;
 
@@ -33,10 +29,6 @@ public class RankActivity extends AppCompatActivity {
 
         restRankService = new RestRankService();
         contextOfApplication = getApplicationContext();
-        sharedPreferences = getSharedPreferences(MYPREF,MODE_PRIVATE);
-        bearer = "Bearer "+sharedPreferences.getString("access_token","");
-        Log.d(TAG,"OnCreate");
-        Log.d(TAG,bearer);
     }
 
     @Override
@@ -46,22 +38,20 @@ public class RankActivity extends AppCompatActivity {
         refreshScreen();
     }
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////
+    // TO DO: when refresh screen
     private void refreshScreen() {
 
         String tour_Id="";
         Intent i = getIntent();
         tour_Id = i.getStringExtra("tour_Id");
         /// GET ALL RANKS FROM TOUR
-        restRankService.getService().getAllRanksByTour(bearer, tour_Id, new Callback<List<Rank>>() {
+        restRankService.getService().getAllRanksByTour(tour_Id, new Callback<List<Rank>>() {
             @Override
             public void success(List<Rank> ranks, Response response) {
                 //ListView lv = (ListView) findViewById(R.id.listView);
                 TableView<Rank> tv = (TableView<Rank>) findViewById(R.id.tableView);
 
-
                 Log.d(TAG,"GetAllRanksByTour success");
-
 
                 tv.setHeaderAdapter(new SimpleTableHeaderAdapter(RankActivity.this,"Club","Games","Wons","Draws","Losts","Goals","Concedes","Points"));
                 tv.setDataAdapter(new RankDataAdapter(RankActivity.this,ranks));

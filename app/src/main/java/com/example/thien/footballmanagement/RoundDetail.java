@@ -39,20 +39,16 @@ import retrofit.client.Response;
 
 public class RoundDetail extends AppCompatActivity {
 
-    public static List<Match> _matches;  // Store all matches for further uses here
-    private String TAG = "RoundDetailActivity";
-    public static final String MYPREF = "com.example.thien";
-    public SharedPreferences sharedPreferences;
-    public static String bearer = "";
+    // Store all matches for further uses here
+    public static List<Match> mMatches;
+    private final String TAG = this.getClass().getSimpleName();
     public static Context contextOfApplication;
-
     ListView listView;
     Button btnProc;
     RestRoundService restRoundService;
     RestMatchService restMatchService;
-    TextView match_Id;
-    TextView roundDetailName;
-    Round _round;
+    TextView match_Id, roundDetailName;
+    Round mRound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +58,9 @@ public class RoundDetail extends AppCompatActivity {
         // Initiate
         restRoundService = new RestRoundService();
         restMatchService = new RestMatchService();
+        mRound = new Round();
+        mMatches = new ArrayList<Match>();
         contextOfApplication = getApplicationContext();
-        _round = new Round();
-        _matches = new ArrayList<Match>();
-
         roundDetailName = (TextView) findViewById(R.id.detailRoundName);
         btnProc= (Button) findViewById(R.id.btn_proceed);
         btnProc.setOnClickListener(new View.OnClickListener() {
@@ -74,11 +69,6 @@ public class RoundDetail extends AppCompatActivity {
                 proceed();
             }
         });
-
-        sharedPreferences = getSharedPreferences(MYPREF,MODE_PRIVATE);
-        bearer = "Bearer "+sharedPreferences.getString("access_token","");
-        Log.d(TAG,"OnCreate");
-        Log.d(TAG,bearer);
     }
 
     @Override
@@ -100,20 +90,21 @@ public class RoundDetail extends AppCompatActivity {
     // Simulate matches by random scores
     private void proceed(){
         int maxRand = getRandom(0,5);
-        Log.d(TAG, "Before Proceed matches, _matches size = "+_matches.size());
-        for(int i = 0;i< _matches.size();i++){
-            if(_matches.get(i).HomeId!=null && _matches.get(i).AwayId!=null){
-                _matches.get(i).HomeScore = getRandom(0,maxRand)+1;
-                _matches.get(i).AwayScore = getRandom(0,maxRand);
-                _matches.get(i).IsDone = true;
+        Log.d(TAG, "Before Proceed matches, _matches size = "+mMatches.size());
+        for(int i = 0;i< mMatches.size();i++){
+            if(mMatches.get(i).HomeId!=null && mMatches.get(i).AwayId!=null){
+                mMatches.get(i).HomeScore = getRandom(0,maxRand)+1;
+                mMatches.get(i).AwayScore = getRandom(0,maxRand);
+                mMatches.get(i).IsDone = true;
             }
 
         }
-        _round.IsDone = true;
+        mRound.IsDone = true;
+
+        // disable proceed button after proceed done
         btnProc.setEnabled(false);
-        btnProc.setBackgroundColor(Color.BLACK); // disable proceed button after proceed done
-        Log.d(TAG, "Proceeded matches, _matches size = "+_matches.size());
-        restMatchService.getService().proceedMatches(bearer, _matches, new Callback<Object>() {
+        btnProc.setBackgroundColor(Color.BLACK);
+        restMatchService.getService().proceedMatches(mMatches, new Callback<Object>() {
 
             @Override
             public void success(Object o, Response response) {
@@ -128,7 +119,7 @@ public class RoundDetail extends AppCompatActivity {
         });
         Log.d(TAG,"Proceed finished!");
         Toast.makeText(getApplicationContext(),"Matches done!",Toast.LENGTH_LONG).show();
-        restRoundService.getService().updateRound(bearer, _round, new Callback<Round>() {
+        restRoundService.getService().updateRound(mRound, new Callback<Round>() {
             @Override
             public void success(Round round, Response response) {
 
@@ -144,7 +135,7 @@ public class RoundDetail extends AppCompatActivity {
 
     }
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////
+    // TO DO: when refresh screen
     private void refreshScreen() {
 
         //Call to server to grab list of matches records. this is a asyn
@@ -153,14 +144,14 @@ public class RoundDetail extends AppCompatActivity {
         round_Id = i.getStringExtra("round_Id");
         Log.d(TAG,"round_Id= "+round_Id);
         // Get round info
-        restRoundService.getService().getRoundById(bearer, round_Id, new Callback<Round>() {
+        restRoundService.getService().getRoundById(round_Id, new Callback<Round>() {
             @Override
             public void success(Round round, Response response) {
                 Log.d(TAG, "fetch Round successfully!");
-                _round = round;
-                roundDetailName.setText("Round "+_round.Name);
+                mRound = round;
+                roundDetailName.setText("Round "+mRound.Name);
                 // IF: round is done, set background to black
-                if(_round.IsDone){
+                if(mRound.IsDone){
                     btnProc.setEnabled(false);
                     btnProc.setBackgroundColor(Color.BLACK);
                 }
@@ -174,7 +165,7 @@ public class RoundDetail extends AppCompatActivity {
             }
         });
         /// Get all matches by round Id
-        restMatchService.getService().getAllMatchesByRound(bearer, round_Id, new Callback<List<Match>>() {
+        restMatchService.getService().getAllMatchesByRound(round_Id, new Callback<List<Match>>() {
             @Override
             public void success(List<Match> matches, Response response) {
                 //ListView lv = (ListView) findViewById(R.id.listView);
@@ -182,10 +173,10 @@ public class RoundDetail extends AppCompatActivity {
 
                 // Store all matches in _matches from response body
                 for(Match match : matches){
-                    _matches.add(match);
+                    mMatches.add(match);
                 }
 
-                Log.d(TAG,"GetAllMatchesByRound success _matches size = "+_matches.size());
+                Log.d(TAG,"GetAllMatchesByRound success _matches size = "+mMatches.size());
                 // Set Table Header
                 tv.setHeaderAdapter(new SimpleTableHeaderAdapter(RoundDetail.this,"Home","","","Away"));
                 // Set Match Data Adapter to the Table View

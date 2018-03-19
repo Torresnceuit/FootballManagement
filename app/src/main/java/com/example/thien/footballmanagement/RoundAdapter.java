@@ -31,9 +31,7 @@ import retrofit.client.Response;
 
 public class RoundAdapter extends ArrayAdapter<Round> {
 
-    private final String TAG = "RoundAdapter";
-    public static final String MYPREF = "com.example.thien";
-    public static String bearer = "";
+    private final String TAG = this.getClass().getSimpleName();
     private RestRoundService restRoundService;
     private Context applicationContext;
 
@@ -47,13 +45,6 @@ public class RoundAdapter extends ArrayAdapter<Round> {
         View v = convertView;
 
         restRoundService = new RestRoundService();
-
-        applicationContext = TournamentDetail.getContextOfApplication();
-
-        bearer = "Bearer "+applicationContext
-                .getSharedPreferences(MYPREF,Context.MODE_PRIVATE)
-                .getString("access_token",""); // Get bearer for authentication
-        Log.d(TAG,bearer);
 
         if (v == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);

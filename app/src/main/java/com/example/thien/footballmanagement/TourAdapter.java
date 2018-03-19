@@ -29,9 +29,7 @@ import retrofit.client.Response;
 
 public class TourAdapter extends ArrayAdapter<Tournament> {
 
-    private final String TAG = "TourAdapter";
-    public static final String MYPREF = "com.example.thien";
-    public static String bearer = "";
+    private final String TAG = this.getClass().getSimpleName();
     private RestTourService restTourService;
     private Context applicationContext;
 
@@ -46,19 +44,14 @@ public class TourAdapter extends ArrayAdapter<Tournament> {
 
         restTourService = new RestTourService();
 
-        applicationContext = LeagueDetail.getContextOfApplication(); // Get LeagueDetail Context to use SharePreference
-
-        bearer = "Bearer "+applicationContext
-                .getSharedPreferences(MYPREF,Context.MODE_PRIVATE)
-                .getString("access_token",""); // Build bearer for authentication
-        Log.d(TAG,bearer);
+        applicationContext = LeagueDetail.getContextOfApplication();
 
         if (v == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = inflater.inflate(R.layout.view_tour_entry, parent, false);
         }
-
-        final Tournament tour = getItem(position); // Get tour at position
+        // Get tour at position
+        final Tournament tour = getItem(position);
 
         if (tour != null) {
             TextView tvTourId = (TextView) v.findViewById(R.id.tour_Id);
@@ -81,7 +74,8 @@ public class TourAdapter extends ArrayAdapter<Tournament> {
                         .into(ivTourLogo);
 
             }else {
-                ivTourLogo.setImageResource(R.drawable.cup); // Use default image for Tour Logo
+                // Use default image for Tour Logo
+                ivTourLogo.setImageResource(R.drawable.cup);
             }
 
 
@@ -100,17 +94,15 @@ public class TourAdapter extends ArrayAdapter<Tournament> {
 
         return v;
     }
-
-    /*
-        delete a tournament, parameter: Tournament
-     */
+    //delete a tournament, parameter: Tournament
     private void delete(final Tournament tour){
-        restTourService.getService().deleteTour(bearer, tour.Id, new Callback<List<Tournament>>() {
+        restTourService.getService().deleteTour(tour.Id, new Callback<List<Tournament>>() {
             @Override
             public void success(List<Tournament> tournaments, Response response) {
                 Log.d(TAG,"Delete tour done successfully!");
                 remove(tour);
-                notifyDataSetChanged(); // Notify to reload data set
+                // Notify to reload data set
+                notifyDataSetChanged();
             }
 
             @Override

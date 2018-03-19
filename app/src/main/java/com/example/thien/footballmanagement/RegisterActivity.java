@@ -31,13 +31,10 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText _nameText;
-    private EditText _emailText;
-    private EditText _passwordText;
-    private EditText _confirmText;
-    private Button   _signupButton;
-    private TextView _loginLink;
-    private static final String TAG = "RegisterActivity";
+    private EditText nameText, emailText, passwordText, confirmText;
+    private Button   signupButton;
+    private TextView loginLink;
+    private final String TAG = this.getClass().getSimpleName();
     private static final String REQ_URL = "http://10.0.2.2:55903/api/account/register";
     private static final String KEY_USERNAME = "Username";
     private static final String KEY_EMAIL = "Email";
@@ -49,21 +46,21 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        _nameText = (EditText) findViewById(R.id.input_name);
-        _emailText = (EditText) findViewById(R.id.input_email);
-        _passwordText = (EditText) findViewById(R.id.input_password);
-        _confirmText = (EditText) findViewById(R.id.input_confirmPassword);
-        _signupButton = (Button) findViewById(R.id.btn_signup);
-        _loginLink = (TextView) findViewById(R.id.link_login);
+        nameText = (EditText) findViewById(R.id.input_name);
+        emailText = (EditText) findViewById(R.id.input_email);
+        passwordText = (EditText) findViewById(R.id.input_password);
+        confirmText = (EditText) findViewById(R.id.input_confirmPassword);
+        signupButton = (Button) findViewById(R.id.btn_signup);
+        loginLink = (TextView) findViewById(R.id.link_login);
 
-        _signupButton.setOnClickListener(new View.OnClickListener() {
+        signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signup();
             }
         });
 
-        _loginLink.setOnClickListener(new View.OnClickListener() {
+        loginLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Finish the registration screen and return to the Login activity
@@ -80,7 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        _signupButton.setEnabled(false);
+        signupButton.setEnabled(false);
 
         final ProgressDialog progressDialog = new ProgressDialog(RegisterActivity.this,
                 R.style.AppTheme);
@@ -88,10 +85,10 @@ public class RegisterActivity extends AppCompatActivity {
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
 
-        final String name = _nameText.getText().toString();
-        final String email = _emailText.getText().toString();
-        final String password = _passwordText.getText().toString();
-        final String confirmPassword = _confirmText.getText().toString();
+        final String name = nameText.getText().toString();
+        final String email = emailText.getText().toString();
+        final String password = passwordText.getText().toString();
+        final String confirmPassword = confirmText.getText().toString();
 
         Log.d(TAG,name);
         Log.d(TAG,email);
@@ -156,7 +153,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     public void onSignupSuccess() {
-        _signupButton.setEnabled(true);
+        signupButton.setEnabled(true);
         setResult(RESULT_OK, null);
         finish();
     }
@@ -164,36 +161,36 @@ public class RegisterActivity extends AppCompatActivity {
     public void onSignupFailed() {
         Toast.makeText(getBaseContext(), "Register failed", Toast.LENGTH_LONG).show();
 
-        _signupButton.setEnabled(true);
+        signupButton.setEnabled(true);
     }
 
     public boolean validate() {
         boolean valid = true;
 
-        String name = _nameText.getText().toString();
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
-        String confirmPass = _confirmText.getText().toString();
+        String name = nameText.getText().toString();
+        String email = emailText.getText().toString();
+        String password = passwordText.getText().toString();
+        String confirmPass = confirmText.getText().toString();
 
         if (name.isEmpty() || name.length() < 3) {
-            _nameText.setError("at least 3 characters");
+            nameText.setError("at least 3 characters");
             valid = false;
         } else {
-            _nameText.setError(null);
+            nameText.setError(null);
         }
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailText.setError("enter a valid email address");
+            emailText.setError("enter a valid email address");
             valid = false;
         } else {
-            _emailText.setError(null);
+            emailText.setError(null);
         }
 
         if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            _passwordText.setError("between 4 and 10 alphanumeric characters");
+            passwordText.setError("between 4 and 10 alphanumeric characters");
             valid = false;
         } else {
-            _passwordText.setError(null);
+            passwordText.setError(null);
         }
 
         //if(password!= confirmPass)valid = false;

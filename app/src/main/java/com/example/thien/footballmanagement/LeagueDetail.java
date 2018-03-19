@@ -26,22 +26,20 @@ import retrofit.client.Response;
 
 public class LeagueDetail extends AppCompatActivity {
 
-    private List<Tournament> tours; // store tours from response to the list
-    private String TAG = "LeagueDetailActivity";
-    public static final String MYPREF = "com.example.thien";
-    public SharedPreferences sharedPreferences;
-    public static String bearer = "";
-    public static Context contextOfApplication; //instance of LeagueDetail context
+    // store tours from response to the list
+    private List<Tournament> mTours;
+    private final String TAG = this.getClass().getSimpleName();
+    //instance of LeagueDetail context
+    public static Context contextOfApplication;
 
     ListView listView;
-    Button btnAdd;
-    Button btnSave;
+    Button btnAdd, btnSave;
     RestTourService restTourService;
     RestLeagueService restLeagueService;
     TextView tour_Id;
     ImageView leagueDetailLogo;
     EditText leagueDetailName;
-    League _league;
+    League mLeague;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +49,7 @@ public class LeagueDetail extends AppCompatActivity {
         restTourService = new RestTourService();
         restLeagueService = new RestLeagueService();
         contextOfApplication = getApplicationContext();
-        _league = new League();
+        mLeague = new League();
         leagueDetailLogo = (ImageView) findViewById(R.id.detailLeagueLogo);
         leagueDetailName = (EditText) findViewById(R.id.detailLeagueName);
         btnAdd= (Button) findViewById(R.id.btnAddTour);
@@ -68,11 +66,7 @@ public class LeagueDetail extends AppCompatActivity {
                 save();
             }
         });
-        //btnAdd.setOnClickListener(this);
-        sharedPreferences = getSharedPreferences(MYPREF,MODE_PRIVATE);
-        bearer = "Bearer "+sharedPreferences.getString("access_token","");
-        Log.d(TAG,"OnCreate");
-        Log.d(TAG,bearer);
+
     }
 
     @Override
@@ -82,18 +76,18 @@ public class LeagueDetail extends AppCompatActivity {
         refreshScreen();
     }
 
-    ////OPEN ADD LEAGUE DIALOG
+    // Open Add Screen
 
     private void openAdd(){
         Intent i = new Intent(LeagueDetail.this,AddTournament.class);
-        i.putExtra("league_Id",_league.Id);
+        i.putExtra("league_Id",mLeague.Id);
         startActivity(i);
     }
 
-    //////SAVE LEAGUE AFTER EDIT
+    // Save League After Edit
     private void save(){
-        _league.Name = leagueDetailName.getText().toString();
-        restLeagueService.getService().updateLeague(bearer, _league, new Callback<League>() {
+        mLeague.Name = leagueDetailName.getText().toString();
+        restLeagueService.getService().updateLeague(mLeague, new Callback<League>() {
             @Override
             public void success(League league, Response response) {
                 Log.d(TAG,"Update League Successfully!");
@@ -107,7 +101,7 @@ public class LeagueDetail extends AppCompatActivity {
             }
         });
     }
-    /////////////////////////////////////////////////////////////////////////////////////////////////
+    // TO DO when refresh
     private void refreshScreen() {
 
         //Call to server to grab list of tournaments records. this is an asyn
@@ -115,12 +109,12 @@ public class LeagueDetail extends AppCompatActivity {
         Intent i = getIntent();
         league_Id = i.getStringExtra("league_Id"); // Get league_Id passed through Intent
         Log.d(TAG,"league_Id= "+league_Id);
-        ////// Get league infor first
-        restLeagueService.getService().getLeagueById(bearer, league_Id, new Callback<League>() {
+        // Get league infor first
+        restLeagueService.getService().getLeagueById(league_Id, new Callback<League>() {
             @Override
             public void success(League league, Response response) {
                 Log.d(TAG, "fetch League successfully!");
-                _league = league;
+                mLeague = league;
                 if(league.Logo!=null){
                     String leagueLogoUrl = league.Logo
                             .replaceAll("localhost","10.0.2.2"); //Build Image Url
@@ -142,11 +136,14 @@ public class LeagueDetail extends AppCompatActivity {
             @Override
             public void failure(RetrofitError error) {
                 Log.d(TAG,"fetch League failed!");
-                Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_LONG).show();
+                if(error.getMessage().length()>0){
+                    Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_LONG).show();
+                }
+
             }
         });
         /// Get all tournaments from league Id
-        restTourService.getService().getAllToursByLeague(bearer, league_Id, new Callback<List<Tournament>>() {
+        restTourService.getService().getAllToursByLeague(league_Id, new Callback<List<Tournament>>() {
             @Override
             public void success(List<Tournament> tournaments, Response response) {
                 ListView lv = (ListView) findViewById(R.id.listView);
@@ -175,7 +172,10 @@ public class LeagueDetail extends AppCompatActivity {
             @Override
             public void failure(RetrofitError error) {
                 Log.d(TAG,"GetAllToursByLeague failed");
-                Toast.makeText(LeagueDetail.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                if(error.getMessage().length()>0){
+                    Toast.makeText(LeagueDetail.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 

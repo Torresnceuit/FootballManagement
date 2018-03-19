@@ -21,11 +21,8 @@ import retrofit.client.Response;
 
 public class RankDataAdapter extends TableDataAdapter {
 
-    private final String TAG = "RankDataAdapter";
-    public static final String MYPREF = "com.example.thien";
-    public static String bearer = "";
+    private final String TAG = this.getClass().getSimpleName();
     private RestTeamService restTeamService;
-    private Context applicationContext;
     private static final int TEXT_SIZE = 14;
 
     public RankDataAdapter(Context context, List<Rank> ranks) {
@@ -38,11 +35,6 @@ public class RankDataAdapter extends TableDataAdapter {
 
         View renderedView = null;
         restTeamService = new RestTeamService();
-
-        applicationContext = TournamentDetail.getContextOfApplication();
-
-        bearer = "Bearer "+applicationContext.getSharedPreferences(MYPREF,Context.MODE_PRIVATE).getString("access_token","");
-        Log.d(TAG,bearer);
 
         switch (columnIndex) {
             case 0:
@@ -161,7 +153,7 @@ public class RankDataAdapter extends TableDataAdapter {
     private View renderTeamName(Rank rank) {
         final TextView tv = new TextView(getContext());
 
-        restTeamService.getService().getTeamById(bearer, rank.TeamId, new Callback<Team>() {
+        restTeamService.getService().getTeamById(rank.TeamId, new Callback<Team>() {
             @Override
             public void success(Team team, Response response) {
 

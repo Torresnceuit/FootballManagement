@@ -16,26 +16,20 @@ import retrofit.client.Response;
 
 public class AddTeam extends AppCompatActivity {
 
-    private String TAG = "AddTeamActivity";
-    public static final String MYPREF = "com.example.thien";
-    public SharedPreferences sharedPreferences;
-    public static String bearer = "";
-
+    private final String TAG = this.getClass().getSimpleName();
     private Button btnSave;
-    private EditText _teamName;
+    private EditText teamName;
     private RestTeamService restTeamService;
-    private Team team;
+    private Team mTeam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_team);
         btnSave = (Button) findViewById(R.id.btn_saveTeam);
-        _teamName = (EditText) findViewById(R.id.addteam_name);
+        teamName = (EditText) findViewById(R.id.addteam_name);
         restTeamService = new RestTeamService();
-        sharedPreferences = getSharedPreferences(MYPREF,MODE_PRIVATE);
-        bearer = "Bearer "+sharedPreferences.getString("access_token","");
-        team = new Team();
+        mTeam = new Team();
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,14 +41,14 @@ public class AddTeam extends AppCompatActivity {
 
     private void save(){
         Intent i = getIntent();
-        team.Name = _teamName.getText().toString();
-        team.TourId = i.getStringExtra("tour_Id");
+        mTeam.Name = teamName.getText().toString();
+        mTeam.TourId = i.getStringExtra("tour_Id");
 
         if(!validate()){
             onSaveFailed();
             return;
         }
-        restTeamService.getService().updateTeam(bearer, team, new Callback<Team>() {
+        restTeamService.getService().updateTeam(mTeam, new Callback<Team>() {
 
 
 
@@ -86,12 +80,12 @@ public class AddTeam extends AppCompatActivity {
     public boolean validate() {
         boolean valid = true;
 
-        String teamName = _teamName.getText().toString();
-        if(teamName.isEmpty()){
-            _teamName.setError("Name can not be empty, please fill in club name!");
+        String team_Name = teamName.getText().toString();
+        if(team_Name.isEmpty()){
+            teamName.setError("Name can not be empty, please fill in club name!");
             valid = false;
         }else {
-            _teamName.setError(null);
+            teamName.setError(null);
         }
 
         return valid;

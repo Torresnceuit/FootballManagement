@@ -16,27 +16,20 @@ import retrofit.client.Response;
 
 public class AddLeague extends AppCompatActivity {
 
-    private String TAG = "AddLeagueActivity";
-    public static final String MYPREF = "com.example.thien";
-    public SharedPreferences sharedPreferences;
-    public static String bearer = "";
-
+    private String TAG = this.getClass().getSimpleName();
     private Button btnSave;
-    private EditText _leagueName;
+    private EditText mLeagueName;
     private RestLeagueService restLeagueService;
-    private League league;
+    private League mLeague;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_league);
         btnSave = (Button) findViewById(R.id.btn_saveLeague);
-        _leagueName = (EditText) findViewById(R.id.addleague_name);
+        mLeagueName = (EditText) findViewById(R.id.addleague_name);
         restLeagueService = new RestLeagueService();
-        sharedPreferences = getSharedPreferences(MYPREF,MODE_PRIVATE);
-        bearer = "Bearer "+sharedPreferences.getString("access_token","");
-        league = new League();
-
+        mLeague = new League();
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,13 +40,13 @@ public class AddLeague extends AppCompatActivity {
 
     private void save(){
 
-        league.Name = _leagueName.getText().toString();
+        mLeague.Name = mLeagueName.getText().toString();
 
         if(!validate()){
             onSaveFailed();
             return;
         }
-        restLeagueService.getService().updateLeague(bearer, league, new Callback<League>() {
+        restLeagueService.getService().updateLeague(mLeague, new Callback<League>() {
             @Override
             public void success(League league, Response response) {
                 Log.d(TAG,"Add League Successfully!");
@@ -82,12 +75,12 @@ public class AddLeague extends AppCompatActivity {
     public boolean validate() {
         boolean valid = true;
 
-        String leagueName = _leagueName.getText().toString();
+        String leagueName = mLeagueName.getText().toString();
         if(leagueName.isEmpty()){
-            _leagueName.setError("Name can not be empty, please fill in club name!");
+            mLeagueName.setError("Name can not be empty, please fill in club name!");
             valid = false;
         }else {
-            _leagueName.setError(null);
+            mLeagueName.setError(null);
         }
 
         return valid;

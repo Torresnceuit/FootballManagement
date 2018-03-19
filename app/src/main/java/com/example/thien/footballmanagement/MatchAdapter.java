@@ -27,13 +27,10 @@ import retrofit.client.Response;
 
 public class MatchAdapter extends ArrayAdapter<Match> {
 
-    private final String TAG = "MatchAdapter";
-    public static final String MYPREF = "com.example.thien";
-    public static String bearer = "";
+    private final String TAG = this.getClass().getSimpleName();
     private RestTeamService restTeamService;
-    private Context applicationContext;
-    private Team homeTeam;
-    private Team awayTeam;
+    private Team mHomeTeam;
+    private Team mAwayTeam;
 
     public MatchAdapter(@NonNull Context context, int resource, @NonNull List<Match> matches) {
         super(context, resource, matches);
@@ -45,13 +42,8 @@ public class MatchAdapter extends ArrayAdapter<Match> {
         View v = convertView;
 
         restTeamService = new RestTeamService();
-        homeTeam = new Team();
-        awayTeam = new Team();
-
-        applicationContext = HomeActivity.getContextOfApplication();
-
-        bearer = "Bearer "+applicationContext.getSharedPreferences(MYPREF,Context.MODE_PRIVATE).getString("access_token","");
-        Log.d(TAG,bearer);
+        mHomeTeam = new Team();
+        mAwayTeam = new Team();
 
         if (v == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -68,10 +60,10 @@ public class MatchAdapter extends ArrayAdapter<Match> {
             TextView tvAwayScore = (TextView) v.findViewById(R.id.awayScore);
             tvMatchId.setText( match.Id);
             tvMatchId.setGravity(Gravity.CENTER);
-            restTeamService.getService().getTeamById(bearer, match.HomeId, new Callback<Team>() {
+            restTeamService.getService().getTeamById(match.HomeId, new Callback<Team>() {
                 @Override
                 public void success(Team team, Response response) {
-                    homeTeam = team;
+                    mHomeTeam = team;
                     tvHomeName.setText(team.Name);
                     tvHomeName.setGravity(Gravity.CENTER);
                     Log.d(TAG,"get Home Team successfully");
@@ -84,10 +76,10 @@ public class MatchAdapter extends ArrayAdapter<Match> {
                 }
             });
 
-            restTeamService.getService().getTeamById(bearer, match.AwayId, new Callback<Team>() {
+            restTeamService.getService().getTeamById(match.AwayId, new Callback<Team>() {
                 @Override
                 public void success(Team team, Response response) {
-                    awayTeam = team;
+                    mAwayTeam = team;
                     tvAwayName.setText(team.Name);
                     tvAwayName.setGravity(Gravity.CENTER);
                     Log.d(TAG,"get Away Team successfully");
@@ -105,27 +97,7 @@ public class MatchAdapter extends ArrayAdapter<Match> {
 
             tvAwayScore.setText(""+match.AwayScore);
             tvAwayScore.setGravity(Gravity.CENTER);
-            /*if(player.Avatar!=null){
-                String playerLogoUrl = player.Avatar.replaceAll("localhost","10.0.2.2");
-                Log.d(TAG,playerLogoUrl);
-
-                Picasso.with(this.getContext())
-                        .load(playerLogoUrl)
-                        .resize(50,50)
-                        .centerCrop()
-                        .into(ivPlayerLogo);
-
-            }else {
-                ivPlayerLogo.setImageResource(R.drawable.player);
-            }*/
-
-
-
-
         }
-
-
-
 
         return v;
     }
