@@ -45,7 +45,7 @@ public class LeagueDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_league_detail);
-
+        // initialize members
         restTourService = new RestTourService();
         restLeagueService = new RestLeagueService();
         contextOfApplication = getApplicationContext();
@@ -53,6 +53,7 @@ public class LeagueDetail extends AppCompatActivity {
         leagueDetailLogo = (ImageView) findViewById(R.id.detailLeagueLogo);
         leagueDetailName = (EditText) findViewById(R.id.detailLeagueName);
         btnAdd= (Button) findViewById(R.id.btnAddTour);
+        // set click event of button Add
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,6 +61,7 @@ public class LeagueDetail extends AppCompatActivity {
             }
         });
         btnSave = (Button) findViewById(R.id.btn_save);
+        // set click event of button Save
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,11 +75,11 @@ public class LeagueDetail extends AppCompatActivity {
     public void onResume() {
 
         super.onResume();
+        // refresh the screen
         refreshScreen();
     }
 
     // Open Add Screen
-
     private void openAdd(){
         Intent i = new Intent(LeagueDetail.this,AddTournament.class);
         i.putExtra("league_Id",mLeague.Id);
@@ -116,8 +118,9 @@ public class LeagueDetail extends AppCompatActivity {
                 Log.d(TAG, "fetch League successfully!");
                 mLeague = league;
                 if(league.Logo!=null){
+                    //Build Image Url
                     String leagueLogoUrl = league.Logo
-                            .replaceAll("localhost","10.0.2.2"); //Build Image Url
+                            .replaceAll("localhost","10.0.2.2"); 
 
                     // Load Image from Url to leagueDetailLogo
                     Picasso.with(getApplicationContext())
@@ -126,9 +129,10 @@ public class LeagueDetail extends AppCompatActivity {
                             .centerCrop()
                             .into(leagueDetailLogo);
                 }else {
-                    leagueDetailLogo.setImageResource(R.drawable.club); // Set default Logo
+                    // Set default Logo
+                    leagueDetailLogo.setImageResource(R.drawable.club); 
                 }
-
+                // set league name
                 leagueDetailName.setText(league.Name);
 
             }
@@ -166,7 +170,8 @@ public class LeagueDetail extends AppCompatActivity {
 
                     }
                 });
-                lv.setAdapter(tourAdapter); // set listview adapter = tourAdapter
+                // set listview adapter
+                lv.setAdapter(tourAdapter); 
             }
 
             @Override
@@ -178,8 +183,6 @@ public class LeagueDetail extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     public static Context getContextOfApplication(){

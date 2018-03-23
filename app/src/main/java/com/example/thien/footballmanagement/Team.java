@@ -1,7 +1,14 @@
 package com.example.thien.footballmanagement;
 
 /**
- * Created by thien on 9/03/2018.
+ * Created by thien on 7/03/2018.
+ * |----------Team-----------|
+ * |---------------------------|
+ * |------------Id-------------|
+ * |------------Name-----------|
+ * |------------Logo-----------|
+ * |------------TourId---------|
+ * 
  */
 
 public class Team {

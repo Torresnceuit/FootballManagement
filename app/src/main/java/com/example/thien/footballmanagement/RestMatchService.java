@@ -21,8 +21,10 @@ public class RestMatchService {
 
     public RestMatchService()
     {
+        // get bearer from local storage
         bearer = MyApp.getInstance().getPreferenceManager().getString(MyPreferenceManager.KEY_ACCESS_TOKEN);
 
+        // build request with interceptor
         OkHttpClient httpClient = new OkHttpClient().newBuilder()
                 .addInterceptor(new Interceptor() {
                     @Override

@@ -1,7 +1,18 @@
 package com.example.thien.footballmanagement;
 
 /**
- * Created by thien on 10/03/2018.
+ * Created by thien on 7/03/2018.
+ * |----------Player-----------|
+ * |---------------------------|
+ * |------------Id-------------|
+ * |----------Name-------------|
+ * |----------Age--------------|
+ * |----------Position---------|
+ * |----------Nationality------|
+ * |----------Number-----------|
+ * |----------TeamId-----------|
+ * |----------Avatar-----------|
+ * 
  */
 
 public class Player {

@@ -71,7 +71,8 @@ public class TeamAdapter extends ArrayAdapter<Team> {
                         .into(ivTeamLogo);
 
             }else {
-                ivTeamLogo.setImageResource(R.drawable.club); // Set default team logo
+                // Set default team logo
+                ivTeamLogo.setImageResource(R.drawable.club); 
             }
 
 

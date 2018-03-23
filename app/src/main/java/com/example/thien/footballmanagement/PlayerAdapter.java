@@ -56,8 +56,10 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
             TextView tvPlayerName = (TextView) v.findViewById(R.id.player_name);
             ImageView ivPlayerLogo = (ImageView) v.findViewById(R.id.player_logo);
             tvPlayerId.setText( player.Id);
+            // set player id in center
             tvPlayerId.setGravity(Gravity.CENTER);
             tvPlayerName.setText(player.Name);
+            // set player name in center
             tvPlayerName.setGravity(Gravity.CENTER);
             if(player.Avatar!=null){
                 String playerLogoUrl = player.Avatar.replaceAll("localhost","10.0.2.2");
@@ -71,7 +73,8 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
                         .into(ivPlayerLogo);
 
             }else {
-                ivPlayerLogo.setImageResource(R.drawable.player); // Set default player logo
+                // Set default player logo
+                ivPlayerLogo.setImageResource(R.drawable.player); 
             }
 
 
@@ -80,23 +83,26 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
         }
 
         final Button btnDel = (Button) v.findViewById(R.id.btnDelPlayer);
+        // Set onclick event
         btnDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 delete(player);
 
             }
-        }); // Set onclick event
+        }); 
 
         return v;
     }
 
+    // TO DO when delete
     private void delete(final Player player){
         restPlayerService.getService().deletePlayer(player.Id, new Callback<List<Player>>() {
             @Override
             public void success(List<Player> players, Response response) {
                 Log.d(TAG,"Delete player done successfully!");
                 remove(player);
+                // notify changes
                 notifyDataSetChanged();
             }
 

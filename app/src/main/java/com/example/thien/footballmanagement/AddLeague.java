@@ -13,6 +13,9 @@ import android.widget.Toast;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+/**
+ * AddLeague Activity
+ */
 
 public class AddLeague extends AppCompatActivity {
 
@@ -26,10 +29,12 @@ public class AddLeague extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_league);
+        // initiate members
         btnSave = (Button) findViewById(R.id.btn_saveLeague);
         mLeagueName = (EditText) findViewById(R.id.addleague_name);
         restLeagueService = new RestLeagueService();
         mLeague = new League();
+        // set function save() to click event
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,14 +43,15 @@ public class AddLeague extends AppCompatActivity {
         });
     }
 
+    // save a league
     private void save(){
-
         mLeague.Name = mLeagueName.getText().toString();
-
+        // check form validate or not
         if(!validate()){
             onSaveFailed();
             return;
         }
+        // call league service to update
         restLeagueService.getService().updateLeague(mLeague, new Callback<League>() {
             @Override
             public void success(League league, Response response) {
@@ -59,19 +65,19 @@ public class AddLeague extends AppCompatActivity {
             }
         });
     }
-
+    // save failed
     private void onSaveFailed(){
         Toast.makeText(getBaseContext(), "Add League failed", Toast.LENGTH_LONG).show();
 
         btnSave.setEnabled(true);
     }
-
+    // save successfully
     private void onSaveSuccess(){
         btnSave.setEnabled(false);
         Toast.makeText(getBaseContext(), "Add League done successfully!", Toast.LENGTH_LONG).show();
         finish();
     }
-
+    // check validation
     public boolean validate() {
         boolean valid = true;
 

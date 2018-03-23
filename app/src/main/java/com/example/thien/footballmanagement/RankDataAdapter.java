@@ -65,7 +65,7 @@ public class RankDataAdapter extends TableDataAdapter {
 
         return renderedView;
     }
-
+    // render points
     private View renderPoints(Rank rank) {
         final TextView textView = new TextView(getContext());
         textView.setText(rank.Points+"");
@@ -77,7 +77,7 @@ public class RankDataAdapter extends TableDataAdapter {
 
         return textView;
     }
-
+    // render concedes
     private View renderConcedes(Rank rank) {
         final TextView textView = new TextView(getContext());
         textView.setText(rank.Concede+"");
@@ -89,7 +89,7 @@ public class RankDataAdapter extends TableDataAdapter {
 
         return textView;
     }
-
+    // render goals
     private View renderGoals(Rank rank) {
         final TextView textView = new TextView(getContext());
         textView.setText(rank.Goals+"");
@@ -98,10 +98,9 @@ public class RankDataAdapter extends TableDataAdapter {
         textView.setTypeface(Typeface.SANS_SERIF,Typeface.BOLD);
         textView.setGravity(Gravity.CENTER);
 
-
         return textView;
     }
-
+    // render draws
     private View renderDraws(Rank rank) {
         final TextView textView = new TextView(getContext());
         textView.setText(rank.Draw+"");
@@ -110,10 +109,9 @@ public class RankDataAdapter extends TableDataAdapter {
         textView.setTypeface(Typeface.SANS_SERIF,Typeface.BOLD);
         textView.setGravity(Gravity.CENTER);
 
-
         return textView;
     }
-
+    // render losts
     private View renderLosts(Rank rank) {
         final TextView textView = new TextView(getContext());
         textView.setText(rank.Lost+"");
@@ -122,10 +120,9 @@ public class RankDataAdapter extends TableDataAdapter {
         textView.setTypeface(Typeface.SANS_SERIF,Typeface.BOLD);
         textView.setGravity(Gravity.CENTER);
 
-
         return textView;
     }
-
+    // render wons
     private View renderWons(Rank rank) {
         final TextView textView = new TextView(getContext());
         textView.setText(rank.Won+"");
@@ -134,10 +131,9 @@ public class RankDataAdapter extends TableDataAdapter {
         textView.setTypeface(Typeface.SANS_SERIF,Typeface.BOLD);
         textView.setGravity(Gravity.CENTER);
 
-
         return textView;
     }
-
+    // render games
     private View renderGames(Rank rank) {
         final TextView textView = new TextView(getContext());
         textView.setText(rank.Games+"");
@@ -146,10 +142,9 @@ public class RankDataAdapter extends TableDataAdapter {
         textView.setTypeface(Typeface.SANS_SERIF,Typeface.BOLD);
         textView.setGravity(Gravity.CENTER);
 
-
         return textView;
     }
-
+    // render team name
     private View renderTeamName(Rank rank) {
         final TextView tv = new TextView(getContext());
 
@@ -162,7 +157,6 @@ public class RankDataAdapter extends TableDataAdapter {
                 tv.setTextSize(TEXT_SIZE);
                 tv.setTypeface(Typeface.SANS_SERIF,Typeface.BOLD);
                 tv.setGravity(Gravity.CENTER);
-                //tv.setSingleLine();
                 Log.d(TAG,"get Team successfully");
             }
 
@@ -172,7 +166,6 @@ public class RankDataAdapter extends TableDataAdapter {
 
             }
         });
-
 
         return tv;
     }

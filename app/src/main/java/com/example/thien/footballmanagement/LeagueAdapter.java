@@ -73,12 +73,15 @@ public class LeagueAdapter extends ArrayAdapter<League> {
             TextView tvLeagueName = (TextView) v.findViewById(R.id.league_name);
             ImageView ivLeagueLogo = (ImageView) v.findViewById(R.id.league_logo);
             tvLeagueId.setText( league.Id);
+            // League Id display in the center
             tvLeagueId.setGravity(Gravity.CENTER);
             tvLeagueName.setText(league.Name);
-            tvLeagueName.setGravity(Gravity.CENTER); // League Name display in the center
+            // League Name display in the center
+            tvLeagueName.setGravity(Gravity.CENTER); 
+            //Build Url to get image
             if(league.Logo!=null){
                 String leagueLogoUrl = league.Logo
-                        .replaceAll("localhost","10.0.2.2");//Build Url to get image
+                        .replaceAll("localhost","10.0.2.2");
                 Log.d(TAG,leagueLogoUrl);
 
                 // Use Picasso for getting image from leagueLogoUrl and pass image to ivLeagueLogo
@@ -88,7 +91,8 @@ public class LeagueAdapter extends ArrayAdapter<League> {
                         .centerCrop()
                         .into(ivLeagueLogo);
             }else {
-                ivLeagueLogo.setImageResource(R.drawable.club); // Use the default image
+                // Use the default image
+                ivLeagueLogo.setImageResource(R.drawable.club); 
             }
 
         }
@@ -100,8 +104,6 @@ public class LeagueAdapter extends ArrayAdapter<League> {
 
             }
         });
-
-
         return v;
     }
 
@@ -113,7 +115,8 @@ public class LeagueAdapter extends ArrayAdapter<League> {
             public void success(List<League> leagues, Response response) {
                 Log.d(TAG,"Delete league done successfully!");
                 remove(league);
-                notifyDataSetChanged();// notify changed to reload
+                // notify changed to reload
+                notifyDataSetChanged();
             }
 
             @Override

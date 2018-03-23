@@ -49,6 +49,7 @@ public class TournamentDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tournament_detail);
 
+        // initialize members
         restTourService = new RestTourService();
         restTeamService = new RestTeamService();
         restRoundService = new RestRoundService();
@@ -57,6 +58,7 @@ public class TournamentDetail extends AppCompatActivity {
         tourDetailLogo = (ImageView) findViewById(R.id.detailTourLogo);
         tourDetailName = (EditText) findViewById(R.id.detailTourName);
         btnAdd= (Button) findViewById(R.id.btnAddTeam);
+        // set click event
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +66,7 @@ public class TournamentDetail extends AppCompatActivity {
             }
         });
         btnSave = (Button) findViewById(R.id.btn_save);
+        // set click event
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,6 +74,7 @@ public class TournamentDetail extends AppCompatActivity {
             }
         });
         btnShow = (Button) findViewById(R.id.btnShow);
+        // set click event
         btnShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,6 +82,7 @@ public class TournamentDetail extends AppCompatActivity {
             }
         });
         btnGenerate = (Button) findViewById(R.id.btnGenerate);
+        // set click event
         btnGenerate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,6 +115,7 @@ public class TournamentDetail extends AppCompatActivity {
             public void success(Object o, Response response) {
                 // Display rank
                 Intent i = new Intent(TournamentDetail.this,RankActivity.class);
+                // put tour_Id through intent
                 i.putExtra("tour_Id",mTour.Id);
                 startActivity(i);
             }
@@ -130,12 +136,16 @@ public class TournamentDetail extends AppCompatActivity {
 
     // Generate a new fixture for a new season
     private void generateFixture(){
+        // get intent
         Intent i = getIntent();
+        // get tour_Id from intent
         String tour_Id = i.getStringExtra("tour_Id");
+        // generate fixture
         restTourService.getService().generateFixture(tour_Id,"", new Callback<Object>() {
             @Override
             public void success(Object o, Response response) {
                 Log.d(TAG,"Generate Fixture Successfully!");
+                // reload screen
                 recreate();
             }
 
@@ -150,7 +160,6 @@ public class TournamentDetail extends AppCompatActivity {
     private void save(){
         mTour.Name = tourDetailName.getText().toString();
         restTourService.getService().updateTour(mTour, new Callback<Tournament>() {
-
 
             @Override
             public void success(Tournament tournament, Response response) {
@@ -225,7 +234,8 @@ public class TournamentDetail extends AppCompatActivity {
 
                     }
                 });
-                gvTeam.setAdapter(teamAdapter); //Set gridview adapter = teamAdapter
+                //Set gridview adapter = teamAdapter
+                gvTeam.setAdapter(teamAdapter); 
             }
 
             @Override
@@ -256,6 +266,7 @@ public class TournamentDetail extends AppCompatActivity {
 
                     }
                 });
+                // set adapter for gridview
                 gvRound.setAdapter(roundAdapter);
             }
 
@@ -264,8 +275,6 @@ public class TournamentDetail extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     public static Context getContextOfApplication(){

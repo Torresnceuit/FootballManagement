@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 
 /**
  * Created by thien on 6/03/2018.
+ * Application Local Storage
+ * For GET and PUT data
  */
 
 public class MyPreferenceManager {
@@ -20,6 +22,7 @@ public class MyPreferenceManager {
     public static final String KEY_USERNAME = "username";
     public static final String KEY_PASSWORD = "password";
 
+    // constructor
     public MyPreferenceManager(Context context) {
 
         this.context = context;
@@ -31,7 +34,7 @@ public class MyPreferenceManager {
         editor.apply();
 
     }
-
+    // store a string in key, value to Preferences
     public void putString(String key, String value) {
 
         editor.putString(key, value);
@@ -39,7 +42,7 @@ public class MyPreferenceManager {
         editor.apply();
 
     }
-
+    // get a string with key from Preferences
     public String getString(String key) {
 
         return sharedPreferences.getString(key, null);

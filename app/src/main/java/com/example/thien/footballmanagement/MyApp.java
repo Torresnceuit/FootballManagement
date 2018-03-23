@@ -36,6 +36,7 @@ public class MyApp extends Application {
             Log.d("MyApp","getInstance()!= null");
         }
         if (myPreferenceManager == null) {
+            // get context
             myPreferenceManager = new MyPreferenceManager(getInstance().getApplicationContext());
         }
 

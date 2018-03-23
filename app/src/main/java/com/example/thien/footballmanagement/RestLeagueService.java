@@ -23,8 +23,9 @@ public class RestLeagueService {
 
     public RestLeagueService()
     {
+        // get bearer from local storage
         bearer = MyApp.getInstance().getPreferenceManager().getString(MyPreferenceManager.KEY_ACCESS_TOKEN);
-
+        // Use OkHttpClient with Interceptor
         OkHttpClient httpClient = new OkHttpClient().newBuilder()
                 .addInterceptor(new Interceptor() {
                     @Override
@@ -35,11 +36,13 @@ public class RestLeagueService {
                         Request.Builder requestBuilder = original.newBuilder()
                                 .header("Authorization", "Bearer " + bearer)
                                 .method(original.method(), original.body());
-
+                        
+                        // build request
                         Request request = requestBuilder.build();
                         return chain.proceed(request);
                     }
                 }).build();
+                
         restAdapter = new retrofit.RestAdapter.Builder()
                 .setEndpoint(MyApp.REQ_URL)
                 .setClient(new Ok3Client(httpClient))

@@ -44,6 +44,7 @@ public class PlayerDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_detail);
 
+        // initialize members
         restPlayerService = new RestPlayerService();
         contextOfApplication = getApplicationContext();
         mPlayer = new Player();
@@ -54,6 +55,7 @@ public class PlayerDetail extends AppCompatActivity {
         playerDetailNationality = (EditText) findViewById(R.id.detailPlayerNation);
         playerDetailPos = (EditText) findViewById(R.id.detailPlayerPos) ;
         btnSave = (Button) findViewById(R.id.btn_save);
+        // set click event of button save
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,19 +71,19 @@ public class PlayerDetail extends AppCompatActivity {
         super.onResume();
         refreshScreen();
     }
-
+    // save value
     private void save() {
         mPlayer.Name = playerDetailName.getText().toString();
         mPlayer.Age = Integer.parseInt(playerDetailAge.getText().toString());
         mPlayer.Nationality = playerDetailNationality.getText().toString();
         mPlayer.Number = Integer.parseInt(playerDetailNumber.getText().toString());
         mPlayer.Position = playerDetailPos.getText().toString().split(",");
+        // get player service to update player
         restPlayerService.getService().updatePlayer(mPlayer, new Callback<Player>() {
-
-
             @Override
             public void success(Player player, Response response) {
                 Log.d(TAG,"Update Player Successfully!");
+                // get out of this activity
                 finish();
             }
 
@@ -108,13 +110,16 @@ public class PlayerDetail extends AppCompatActivity {
                 Log.d(TAG, "fetch player successfully!");
                 mPlayer = player;
                 if(player.Avatar!=null){
+                    // build logo url
                     String playerLogoUrl = player.Avatar.replaceAll("localhost","10.0.2.2");
+                    // build image and pass to image view
                     Picasso.with(getApplicationContext())
                             .load(playerLogoUrl)
                             .resize(200,200)
                             .centerCrop()
                             .into(playerDetailAvatar);
                 }else {
+                    // set default image
                     playerDetailAvatar.setImageResource(R.drawable.player);
                 }
 
@@ -123,8 +128,6 @@ public class PlayerDetail extends AppCompatActivity {
                 playerDetailNumber.setText(player.Number+"");
                 playerDetailNationality.setText(player.Nationality);
                 playerDetailPos.setText(String.join(",",player.Position));
-
-
 
             }
 

@@ -84,8 +84,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_SIGNUP);
             }
         });
-
-
     }
 
     // Function to get the instance of application context
@@ -93,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
         return contextOfApplication;
     }
 
-
+    // TO DO when login
     public void login() {
         Log.d(TAG, "Login");
 
@@ -105,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
         //Deactive login button
         loginButton.setEnabled(false);
 
+        // set up progress dialog
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme);
         progressDialog.setIndeterminate(true);
@@ -164,9 +163,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                //params.put("Content-Type", "application/x-www-form-urlencoded");
-                //params.put("Accept","application/json");
-                //params.put("Content-Type","application/json");
                 return params;
             }
 

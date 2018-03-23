@@ -13,6 +13,9 @@ import android.widget.Toast;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+/**
+ * AddTeam Activity
+ */
 
 public class AddTeam extends AppCompatActivity {
 
@@ -26,11 +29,12 @@ public class AddTeam extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_team);
+        // initiate members
         btnSave = (Button) findViewById(R.id.btn_saveTeam);
         teamName = (EditText) findViewById(R.id.addteam_name);
         restTeamService = new RestTeamService();
         mTeam = new Team();
-
+        // set click event
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,20 +42,18 @@ public class AddTeam extends AppCompatActivity {
             }
         });
     }
-
+    // save the team
     private void save(){
         Intent i = getIntent();
         mTeam.Name = teamName.getText().toString();
         mTeam.TourId = i.getStringExtra("tour_Id");
-
+        // check form validation
         if(!validate()){
             onSaveFailed();
             return;
         }
+        // call team service to update team
         restTeamService.getService().updateTeam(mTeam, new Callback<Team>() {
-
-
-
             @Override
             public void success(Team team, Response response) {
                 Log.d(TAG,"Add Team Successfully!");
@@ -65,18 +67,19 @@ public class AddTeam extends AppCompatActivity {
         });
     }
 
+    // TO DO when save failed 
     private void onSaveFailed(){
         Toast.makeText(getBaseContext(), "Add Team failed", Toast.LENGTH_LONG).show();
 
         btnSave.setEnabled(true);
     }
-
+    // TO DO when save successfully
     private void onSaveSuccess(){
         btnSave.setEnabled(false);
         Toast.makeText(getBaseContext(), "Add Tournament done successfully!", Toast.LENGTH_LONG).show();
         finish();
     }
-
+    // check validation
     public boolean validate() {
         boolean valid = true;
 

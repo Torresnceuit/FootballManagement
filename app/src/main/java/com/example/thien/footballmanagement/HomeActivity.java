@@ -19,6 +19,9 @@ import java.util.List;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+/**
+ * Home Activity
+ */
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -94,10 +97,11 @@ public class HomeActivity extends AppCompatActivity {
 
                     }
                 });
+                // set listview adapter
                 lv.setAdapter(leagueAdapter);
 
             }
-
+            // on failure
             @Override
             public void failure(RetrofitError error) {
                 Log.d(TAG,"GetAllLeagues failed");

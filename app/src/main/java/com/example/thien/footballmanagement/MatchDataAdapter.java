@@ -53,11 +53,11 @@ public class MatchDataAdapter extends TableDataAdapter {
 
         return renderedView;
     }
-
+    // render name of home team
     private View renderHomeName(Match match){
 
         final TextView tv = new TextView(getContext());
-
+        // call team service to get a team
         restTeamService.getService().getTeamById(match.HomeId, new Callback<Team>() {
             @Override
             public void success(Team team, Response response) {
@@ -66,7 +66,6 @@ public class MatchDataAdapter extends TableDataAdapter {
                 tv.setPadding(20, 10, 20, 10);
                 tv.setTextSize(TEXT_SIZE);
                 tv.setGravity(Gravity.CENTER);
-                //tv.setSingleLine();
                 Log.d(TAG,"get Home Team successfully");
             }
 
@@ -76,11 +75,9 @@ public class MatchDataAdapter extends TableDataAdapter {
 
             }
         });
-
-
         return tv;
     }
-
+    // render score of home team
     private View renderHomeScore(Match match){
 
         final TextView textView = new TextView(getContext());
@@ -89,10 +86,9 @@ public class MatchDataAdapter extends TableDataAdapter {
         textView.setTextSize(TEXT_SIZE);
         textView.setGravity(Gravity.CENTER);
 
-
         return textView;
     }
-
+    // render score of away team
     private View renderAwayScore(Match match){
 
         final TextView textView = new TextView(getContext());
@@ -103,11 +99,11 @@ public class MatchDataAdapter extends TableDataAdapter {
 
         return textView;
     }
-
+    // render name of away team
     private View renderAwayName(Match match){
 
         final TextView tv = new TextView(getContext());
-
+        // get team by Id to get a name
         restTeamService.getService().getTeamById(match.AwayId, new Callback<Team>() {
             @Override
             public void success(Team team, Response response) {
@@ -125,8 +121,7 @@ public class MatchDataAdapter extends TableDataAdapter {
 
             }
         });
-
-
+        
         return tv;
     }
 

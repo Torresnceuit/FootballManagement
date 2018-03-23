@@ -23,8 +23,10 @@ public class RestTourService {
 
     public RestTourService()
     {
+        // get bearer
         bearer = MyApp.getInstance().getPreferenceManager().getString(MyPreferenceManager.KEY_ACCESS_TOKEN);
 
+        // include interceptor in request
         OkHttpClient httpClient = new OkHttpClient().newBuilder()
                 .addInterceptor(new Interceptor() {
                     @Override

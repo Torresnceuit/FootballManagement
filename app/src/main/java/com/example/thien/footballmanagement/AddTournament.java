@@ -13,6 +13,9 @@ import android.widget.Toast;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+/**
+ * AddTournament Activity
+ */
 
 public class AddTournament extends AppCompatActivity {
 
@@ -25,9 +28,11 @@ public class AddTournament extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_tournament);
+        // intitialize members
         btnSave = (Button) findViewById(R.id.btn_saveTour);
         mTourName = (EditText) findViewById(R.id.addtour_name);
         restTourService = new RestTourService();
+        // set click event
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,16 +40,19 @@ public class AddTournament extends AppCompatActivity {
             }
         });
     }
-
+    // save tournament
     private void save(){
+        // get intent
         Intent i = getIntent();
         mTour.Name = mTourName.getText().toString();
+        // get league_Id pass in intent
         mTour.LeagueId = i.getStringExtra("league_Id");
-
+        // check form validation before save
         if(!validate()){
             onSaveFailed();
             return;
         }
+        // call tournament service interface to update a tour
         restTourService.getService().updateTour(mTour, new Callback<Tournament>() {
 
             @Override
@@ -59,24 +67,25 @@ public class AddTournament extends AppCompatActivity {
             }
         });
     }
-
+    // TO DO when save failed
     private void onSaveFailed(){
         Toast.makeText(getBaseContext(), "Add Tournament failed", Toast.LENGTH_LONG).show();
 
         btnSave.setEnabled(true);
     }
-
+    // TO DO when save success
     private void onSaveSuccess(){
         btnSave.setEnabled(false);
         Toast.makeText(getBaseContext(), "Add Tournament done successfully!", Toast.LENGTH_LONG).show();
         finish();
     }
-
+    // validation check
     public boolean validate() {
         boolean valid = true;
 
         String tourName = mTourName.getText().toString();
         if(tourName.isEmpty()){
+            // set error
             mTourName.setError("Name can not be empty, please fill in club name!");
             valid = false;
         }else {
